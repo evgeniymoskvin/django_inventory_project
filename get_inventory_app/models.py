@@ -4,6 +4,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User, AbstractUser
 
+
 # Create your models here.
 
 class OrdersModel(models.Model):
@@ -200,4 +201,59 @@ class CpeModel(models.Model):
         return f'{self.cpe_user}, {self.cpe_object}'
 
 
+class GeneralInfoInventoryNumberModel(models.Model):
+    """Таблица общей информации по инвентарным номерам"""
+    order = models.ForeignKey(OrdersModel, verbose_name='Заказчик', on_delete=models.SET_NULL, null=True)
+    object_name = models.ForeignKey(ObjectModel, verbose_name='Объект', on_delete=models.SET_NULL, null=True)
+    employee = models.ForeignKey(EmployeeModel, verbose_name='Сотрудник', on_delete=models.SET_NULL, null=True)
+    date_add = models.DateField(verbose_name='Дата регистрации', auto_now_add=True, null=False)
+    actual = models.BooleanField(verbose_name='Актуальный', default=True)
+    return_date = models.DateField(verbose_name='Дата возврата', null=True, blank=True)
 
+    class Meta:
+        verbose_name = _("общая информация об инвентарном номере")
+        verbose_name_plural = _("общая информация об инвентарных номерах")
+
+    def __str__(self):
+        return f'{self.id} - {self.order.order}.{self.object_name.object_code}, {self.date_add}'
+
+
+class OpenInventoryNumbersModel(models.Model):
+    """Таблица открытых инвентарных номеров"""
+    inventory_number = models.CharField(verbose_name="Открытый инвентарный номер", max_length=8)
+    general_info = models.ForeignKey(GeneralInfoInventoryNumberModel, verbose_name='Общая информация',
+                                     on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = _('открытый инвентарный номер')
+        verbose_name_plural = _('открытие инвентарные номера')
+
+    def __str__(self):
+        return f'{self.inventory_number} - {self.general_info}'
+
+
+class CloseInventoryNumbersModel(models.Model):
+    """Таблица зыкрытых инвентарных номеров"""
+    inventory_number = models.CharField(verbose_name="Закрытый инвентарный номер", max_length=8)
+    general_info = models.ForeignKey(GeneralInfoInventoryNumberModel, verbose_name='Общая информация',
+                                     on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = _('закрытый инвентарный номер')
+        verbose_name_plural = _('закрытые инвентарные номера')
+
+    def __str__(self):
+        return f'{self.inventory_number} - {self.general_info}'
+
+class KTInventoryNumbersModel(models.Model):
+    """Таблица зыкрытых инвентарных номеров"""
+    inventory_number = models.CharField(verbose_name="КТ инвентарный номер", max_length=8)
+    general_info = models.ForeignKey(GeneralInfoInventoryNumberModel, verbose_name='Общая информация',
+                                     on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = _('коммерческий инвентарный номер')
+        verbose_name_plural = _('коммерческие инвентарные номера')
+
+    def __str__(self):
+        return f'{self.inventory_number} - {self.general_info}'
