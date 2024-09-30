@@ -1,7 +1,7 @@
 {% extends "get_inventory_app/base.html" %}
 {% load static %}
 {% block title %}
-    Калькулятор форматов
+    Инвентарные номера
 {% endblock %}
 
 {% block content %}
@@ -53,11 +53,11 @@
                 <div class="d-flex flex-row justify-content-between align-items-center mt-2">
                     <div class="d-flex">
                         <select class="form-select" style="width: 415px"
-                                name="type_docs"
+                                name="type_of_inventory_number"
                                 required>
                             <option selected value="">Тип инвентарного номера</option>
-                            {% for obj in objects %}
-                                <option value="{{ obj.id }}">{{ obj }}</option>
+                            {% for obj in type_of_inventory_number %}
+                                <option value="{{ obj.number_of_code_in_ms_access }}">{{ obj.name_of_type }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -91,25 +91,8 @@
     <!-- Модальное окно успешной отправки-->
     <div class="modal fade" id="good_send_modal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-dialog_clearance">
-            <div class="modal-content modal-content_clearance">
-                <div class="modal-header modal-header_clearance">
-                    <h5 class="modal-title text-24px-regular" style="cursor: context-menu">Файл отправлен</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                </div>
+            <div class="modal-content modal-content_clearance" id="inside_good_modal">
 
-                <div class="modal-body modal-body_clearance">
-                    <div class="d-flex w-100 justify-content-between align-items-center">
-                        <div class="d-flex text-20px-light">Файл отправлен</div>
-                    </div>
-                </div>
-                <div class="modal-footer modal-footer_clearance justify-content-center">
-
-                    <button class="button_blue_clearance"
-                            onclick="$('#good_send_modal').modal('hide');">
-                        Ок
-                    </button>
-                </div>
             </div>
         </div>
     </div>
@@ -159,7 +142,7 @@
                 <div class="modal-footer modal-footer_clearance justify-content-center">
 
                     <button class="button_blue_clearance"
-                            onclick="$('#bad_send_modal').modal('hide');">
+                            onclick="$('#error_modal').modal('hide');">
                         Очень жаль
                     </button>
                 </div>
@@ -192,15 +175,14 @@
             $.ajax({
                 type: "POST",
                 data: dataToSend,
-                /*cache: false,
-                processData: false,
-                contentType: false,
-                headers: {
-                    'X-CSRFToken': csrftoken
-                },*/
                 success: function (data) {
+                    $("#inside_good_modal").html(data);
+                    $('#good_send_modal').modal('show');
                     console.log(data)
                 },
+                error: function () {
+                    $('#error_modal').modal('show');
+                }
             })
 
         })

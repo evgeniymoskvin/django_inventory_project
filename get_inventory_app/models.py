@@ -207,7 +207,6 @@ class GeneralInfoInventoryNumberModel(models.Model):
     object_name = models.ForeignKey(ObjectModel, verbose_name='Объект', on_delete=models.SET_NULL, null=True)
     employee = models.ForeignKey(EmployeeModel, verbose_name='Сотрудник', on_delete=models.SET_NULL, null=True)
     date_add = models.DateField(verbose_name='Дата регистрации', auto_now_add=True, null=False)
-    actual = models.BooleanField(verbose_name='Актуальный', default=True)
     return_date = models.DateField(verbose_name='Дата возврата', null=True, blank=True)
 
     class Meta:
@@ -223,13 +222,18 @@ class OpenInventoryNumbersModel(models.Model):
     inventory_number = models.CharField(verbose_name="Открытый инвентарный номер", max_length=8)
     general_info = models.ForeignKey(GeneralInfoInventoryNumberModel, verbose_name='Общая информация',
                                      on_delete=models.CASCADE)
+    actual = models.BooleanField(verbose_name='Актуальный', default=True)
 
     class Meta:
         verbose_name = _('открытый инвентарный номер')
         verbose_name_plural = _('открытие инвентарные номера')
 
     def __str__(self):
-        return f'{self.inventory_number} - {self.general_info}'
+        if self.actual is True:
+            actual_str = 'Актуальный'
+        else:
+            actual_str = 'Аннулирован'
+        return f'{self.inventory_number} ({actual_str})'
 
 
 class CloseInventoryNumbersModel(models.Model):
@@ -237,23 +241,46 @@ class CloseInventoryNumbersModel(models.Model):
     inventory_number = models.CharField(verbose_name="Закрытый инвентарный номер", max_length=8)
     general_info = models.ForeignKey(GeneralInfoInventoryNumberModel, verbose_name='Общая информация',
                                      on_delete=models.CASCADE)
+    actual = models.BooleanField(verbose_name='Актуальный', default=True)
 
     class Meta:
         verbose_name = _('закрытый инвентарный номер')
         verbose_name_plural = _('закрытые инвентарные номера')
 
     def __str__(self):
-        return f'{self.inventory_number} - {self.general_info}'
+        if self.actual is True:
+            actual_str = 'Актуальный'
+        else:
+            actual_str = 'Аннулирован'
+        return f'{self.inventory_number} ({actual_str})'
+
 
 class KTInventoryNumbersModel(models.Model):
     """Таблица зыкрытых инвентарных номеров"""
     inventory_number = models.CharField(verbose_name="КТ инвентарный номер", max_length=8)
     general_info = models.ForeignKey(GeneralInfoInventoryNumberModel, verbose_name='Общая информация',
                                      on_delete=models.CASCADE)
+    actual = models.BooleanField(verbose_name='Актуальный', default=True)
 
     class Meta:
         verbose_name = _('коммерческий инвентарный номер')
         verbose_name_plural = _('коммерческие инвентарные номера')
 
     def __str__(self):
-        return f'{self.inventory_number} - {self.general_info}'
+        if self.actual is True:
+            actual_str = 'Актуальный'
+        else:
+            actual_str = 'Аннулирован'
+        return f'{self.inventory_number} ({actual_str})'
+
+
+class TypeOfInventoryNumberModel(models.Model):
+    name_of_type = models.CharField(verbose_name="Название документации", max_length=100)
+    number_of_code_in_ms_access = models.IntegerField(verbose_name='КодТипИнв в MS Access')
+
+    class Meta:
+        verbose_name = _('тип инвентарного номера')
+        verbose_name_plural = _('типы инвентарных номеров')
+
+    def __str__(self):
+        return f'{self.number_of_code_in_ms_access} - {self.name_of_type}'
