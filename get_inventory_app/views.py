@@ -83,3 +83,20 @@ class IndexView(View):
             'general_info': general_info
         }
         return render(request, 'get_inventory_app/ajax/get_inventory_done.html', content)
+
+
+class MyOpenInventoryNumbers(View):
+    def get(self, request):
+        employee = EmployeeModel.objects.get(user=request.user)
+        # Открытые инвентарные номера
+        open_employee_numbers = OpenInventoryNumbersModel.objects.all().filter(general_info__employee=employee).order_by('-id')
+        content = {'open_employee_numbers': open_employee_numbers}
+        return render(request, 'get_inventory_app/employee_open_inventory_numbers.html', content)
+
+class MyCloseInventoryNumbers(View):
+    def get(self, request):
+        employee = EmployeeModel.objects.get(user=request.user)
+        # Открытые инвентарные номера
+        open_employee_numbers = CloseInventoryNumbersModel.objects.all().filter(general_info__employee=employee).order_by('-id')
+        content = {'open_employee_numbers': open_employee_numbers}
+        return render(request, 'get_inventory_app/employee_close_inventory_numbers.html', content)

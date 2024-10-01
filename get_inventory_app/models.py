@@ -220,7 +220,7 @@ class GeneralInfoInventoryNumberModel(models.Model):
 class OpenInventoryNumbersModel(models.Model):
     """Таблица открытых инвентарных номеров"""
     inventory_number = models.CharField(verbose_name="Открытый инвентарный номер", max_length=8)
-    general_info = models.ForeignKey(GeneralInfoInventoryNumberModel, verbose_name='Общая информация',
+    general_info = models.OneToOneField(GeneralInfoInventoryNumberModel, verbose_name='Общая информация',
                                      on_delete=models.CASCADE)
     actual = models.BooleanField(verbose_name='Актуальный', default=True)
 
@@ -239,7 +239,7 @@ class OpenInventoryNumbersModel(models.Model):
 class CloseInventoryNumbersModel(models.Model):
     """Таблица зыкрытых инвентарных номеров"""
     inventory_number = models.CharField(verbose_name="Закрытый инвентарный номер", max_length=8)
-    general_info = models.ForeignKey(GeneralInfoInventoryNumberModel, verbose_name='Общая информация',
+    general_info = models.OneToOneField(GeneralInfoInventoryNumberModel, verbose_name='Общая информация',
                                      on_delete=models.CASCADE)
     actual = models.BooleanField(verbose_name='Актуальный', default=True)
 
@@ -258,7 +258,7 @@ class CloseInventoryNumbersModel(models.Model):
 class KTInventoryNumbersModel(models.Model):
     """Таблица зыкрытых инвентарных номеров"""
     inventory_number = models.CharField(verbose_name="КТ инвентарный номер", max_length=8)
-    general_info = models.ForeignKey(GeneralInfoInventoryNumberModel, verbose_name='Общая информация',
+    general_info = models.OneToOneField(GeneralInfoInventoryNumberModel, verbose_name='Общая информация',
                                      on_delete=models.CASCADE)
     actual = models.BooleanField(verbose_name='Актуальный', default=True)
 

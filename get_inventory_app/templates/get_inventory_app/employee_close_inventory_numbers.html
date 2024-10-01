@@ -1,0 +1,46 @@
+{% extends "get_inventory_app/base.html" %}
+{% load static %}
+{% block title %}
+    Мои инвентарные номера
+{% endblock %}
+{% block css_script %}
+    <script type="text/javascript"
+            src="{% static 'get_inventory_app/DataTables/datatables.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="d-flex w-100" id="display_div">
+        <div style="width: 100%">
+            <div class="text-36px-bold mt-5">
+                Инвентарные номера
+            </div>
+            <div class="mt-3">
+                <table id="my-print-tasks" class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th class="th_tables" scope="col" style="width: 30px">#</th>
+                        <th class="th_tables" scope="col" style="width: 130px; text-align: center">Инв. номер</th>
+                        <th class="th_tables" scope="col" style="text-align: right;">Дата получения</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for obj in open_employee_numbers %}
+                        <tr class="tr-tables" style="cursor: context-menu;"
+                            onclick="openMyModalWindow({{ obj.id }})">
+                            <th class="th_tables" scope="row" style="width: 30px">{{ forloop.counter }}</th>
+                            <td class="td_tables" style="width: 130px; text-align: center">
+                                {{ obj.inventory_number }}</td>
+                            <td class="td_tables" style="text-align: right">
+                                {{ obj.general_info.date_add }}
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
