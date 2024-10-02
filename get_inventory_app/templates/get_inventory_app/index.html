@@ -178,7 +178,8 @@
                 success: function (data) {
                     $("#inside_good_modal").html(data);
                     $('#good_send_modal').modal('show');
-                    console.log(data)
+                    console.log(data);
+                    $('#form_get_inventory').trigger('reset');
                 },
                 error: function () {
                     $('#error_modal').modal('show');

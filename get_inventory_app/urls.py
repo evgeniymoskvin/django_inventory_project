@@ -21,4 +21,5 @@ urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     path('my_open_inventory_numbers', views.MyOpenInventoryNumbers.as_view(), name='my_open_inventory_numbers'),
     path('my_close_inventory_numbers', views.MyCloseInventoryNumbers.as_view(), name='my_close_inventory_numbers'),
+    path('ajax/details-inventory-number-modal', views.DetailsInventoryNumberModalView.as_view(), name='details-modal'),
 ]

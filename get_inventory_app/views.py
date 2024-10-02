@@ -86,17 +86,34 @@ class IndexView(View):
 
 
 class MyOpenInventoryNumbers(View):
+    @method_decorator(login_required(login_url='login'))
     def get(self, request):
         employee = EmployeeModel.objects.get(user=request.user)
         # Открытые инвентарные номера
-        open_employee_numbers = OpenInventoryNumbersModel.objects.all().filter(general_info__employee=employee).order_by('-id')
+        open_employee_numbers = OpenInventoryNumbersModel.objects.all().filter(
+            general_info__employee=employee).order_by('-id')
         content = {'open_employee_numbers': open_employee_numbers}
         return render(request, 'get_inventory_app/employee_open_inventory_numbers.html', content)
 
+
 class MyCloseInventoryNumbers(View):
+    @method_decorator(login_required(login_url='login'))
     def get(self, request):
         employee = EmployeeModel.objects.get(user=request.user)
         # Открытые инвентарные номера
-        open_employee_numbers = CloseInventoryNumbersModel.objects.all().filter(general_info__employee=employee).order_by('-id')
+        open_employee_numbers = CloseInventoryNumbersModel.objects.all().filter(
+            general_info__employee=employee).order_by('-id')
         content = {'open_employee_numbers': open_employee_numbers}
         return render(request, 'get_inventory_app/employee_close_inventory_numbers.html', content)
+
+class DetailsInventoryNumberModalView(View):
+    def get(self, request):
+        print(request.GET.get('object'))
+        if request.GET.get('type') == 'open':
+            inventory_number_object = OpenInventoryNumbersModel.objects.get(id=int(request.GET.get('object')))
+        elif request.GET.get('type') == 'close':
+            inventory_number_object = CloseInventoryNumbersModel.objects.get(id=int(request.GET.get('object')))
+        else:
+            inventory_number_object = None
+        content = {'obj': inventory_number_object}
+        return render(request, 'get_inventory_app/ajax/details_inventory_number.html', content)

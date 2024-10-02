@@ -766,7 +766,7 @@ row__color {
 @media (min-width: 992px) {
 
     .modal-lg, .modal-xl {
-        max-width: 1250px;
+        max-width: 800px;
     }
 
     .vertical {
