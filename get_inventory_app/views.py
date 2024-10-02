@@ -106,14 +106,18 @@ class MyCloseInventoryNumbers(View):
         content = {'open_employee_numbers': open_employee_numbers}
         return render(request, 'get_inventory_app/employee_close_inventory_numbers.html', content)
 
+
 class DetailsInventoryNumberModalView(View):
     def get(self, request):
         print(request.GET.get('object'))
+        object_id = int(request.GET.get('object'))
         if request.GET.get('type') == 'open':
-            inventory_number_object = OpenInventoryNumbersModel.objects.get(id=int(request.GET.get('object')))
+            inventory_number_object = OpenInventoryNumbersModel.objects.get(id=object_id)
         elif request.GET.get('type') == 'close':
-            inventory_number_object = CloseInventoryNumbersModel.objects.get(id=int(request.GET.get('object')))
+            inventory_number_object = CloseInventoryNumbersModel.objects.get(id=object_id)
         else:
             inventory_number_object = None
-        content = {'obj': inventory_number_object}
+        cpe = CpeModel.objects.get_queryset().filter(cpe_object_id=inventory_number_object.general_info.object_name_id).filter(cpe_important=True).first()
+        content = {'obj': inventory_number_object,
+                   'cpe': f'{cpe.cpe_user.last_name} {cpe.cpe_user.first_name[:1]}.{cpe.cpe_user.middle_name[:1]}'}
         return render(request, 'get_inventory_app/ajax/details_inventory_number.html', content)

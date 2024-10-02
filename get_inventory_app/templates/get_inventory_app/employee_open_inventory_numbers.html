@@ -20,6 +20,8 @@
                     <tr>
                         <th class="th_tables" scope="col" style="width: 30px">#</th>
                         <th class="th_tables" scope="col" style="width: 130px; text-align: center">Инв. номер</th>
+                        <th class="th_tables" scope="col" style="width: 130px; text-align: center">Заказчик</th>
+                        <th class="th_tables" scope="col" style="width: 130px; text-align: center">Объект</th>
                         <th class="th_tables" scope="col" style="text-align: right;">Дата получения</th>
                     </tr>
                     </thead>
@@ -31,6 +33,10 @@
                             <th class="th_tables" scope="row" style="width: 30px">{{ forloop.counter }}</th>
                             <td class="td_tables" style="width: 130px; text-align: center">
                                 {{ obj.inventory_number }}</td>
+                            <td class="td_tables" style="text-align: center">
+                                {{ obj.general_info.order.order }}</td>
+                            <td class="td_tables" style="text-align: center">
+                                {{ obj.general_info.object_name.object_code }}</td>
                             <td class="td_tables" style="text-align: right">
                                 {{ obj.general_info.date_add }}
                             </td>
