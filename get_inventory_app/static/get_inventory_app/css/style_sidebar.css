@@ -339,6 +339,13 @@ nav ul, nav li {
     height: 15px;
     padding-left: 16px; /* Or size of icon + spacing */
 }
+.icon-p-menu {
+    background-image: url('../icons/p.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 15px;
+    padding-left: 16px; /* Or size of icon + spacing */
+}
 
 .icon-new-inventory-menu {
     background-image: url('../icons/square-plus-solid.svg');
