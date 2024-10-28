@@ -10,11 +10,25 @@
                 <a href="{% url 'index' %}" style="vertical-align: top">
 
                     <i class="fa">
-                        <div class="icon-home"></div>
+                        <div class="icon-new-inventory-menu"></div>
                     </i>
 
                     <span class="nav-text text-menu-sidebar" style="text-transform: uppercase">
-                           Главная страница
+                           Взять инвентарный номер
+                        </span>
+                </a>
+
+            </li>
+
+            <li>
+                <a href="{% url 'get-permission' %}" style="vertical-align: top">
+
+                    <i class="fa">
+                        <div class="icon-new-permission-menu"></div>
+                    </i>
+
+                    <span class="nav-text text-menu-sidebar" style="text-transform: uppercase">
+                           Взять номер <br>разрешения
                         </span>
                 </a>
 
@@ -24,7 +38,7 @@
             <li>
                 <a href="{% url 'my_open_inventory_numbers' %}">
                     <i class="fa">
-                        <div class="icon-angle-up-solid-menu"></div>
+                        <div class="icon-open-menu"></div>
                     </i>
                     <span class="nav-text text-menu-sidebar" style="text-transform: uppercase">
                             Открытые инвентарные номера
@@ -35,10 +49,32 @@
             <li>
                 <a href="{% url 'my_close_inventory_numbers' %}">
                     <i class="fa">
-                        <div class="icon-angle-up-solid-menu"></div>
+                        <div class="icon-dsp-menu"></div>
                     </i>
                     <span class="nav-text text-menu-sidebar" style="text-transform: uppercase">
                             Закрытые инвентарные номера
+                        </span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'my_permission_numbers' %}">
+                    <i class="fa">
+                        <div class="icon-r-menu"></div>
+                    </i>
+                    <span class="nav-text text-menu-sidebar" style="text-transform: uppercase">
+                            Разрешения <br>на изменение
+                        </span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'my_replacement_permission_numbers' %}">
+                    <i class="fa">
+                        <div class="icon-p-menu"></div>
+                    </i>
+                    <span class="nav-text text-menu-sidebar" style="text-transform: uppercase">
+                            Разрешения <br>на подмену
                         </span>
                 </a>
             </li>

@@ -201,6 +201,7 @@ class CpeModel(models.Model):
         return f'{self.cpe_user}, {self.cpe_object}'
 
 
+# Инвентарные номера
 class GeneralInfoInventoryNumberModel(models.Model):
     """Таблица общей информации по инвентарным номерам"""
     order = models.ForeignKey(OrdersModel, verbose_name='Заказчик', on_delete=models.SET_NULL, null=True)
@@ -221,7 +222,7 @@ class OpenInventoryNumbersModel(models.Model):
     """Таблица открытых инвентарных номеров"""
     inventory_number = models.CharField(verbose_name="Открытый инвентарный номер", max_length=8)
     general_info = models.OneToOneField(GeneralInfoInventoryNumberModel, verbose_name='Общая информация',
-                                     on_delete=models.CASCADE)
+                                        on_delete=models.CASCADE)
     actual = models.BooleanField(verbose_name='Актуальный', default=True)
 
     class Meta:
@@ -240,7 +241,7 @@ class CloseInventoryNumbersModel(models.Model):
     """Таблица зыкрытых инвентарных номеров"""
     inventory_number = models.CharField(verbose_name="Закрытый инвентарный номер", max_length=8)
     general_info = models.OneToOneField(GeneralInfoInventoryNumberModel, verbose_name='Общая информация',
-                                     on_delete=models.CASCADE)
+                                        on_delete=models.CASCADE)
     actual = models.BooleanField(verbose_name='Актуальный', default=True)
 
     class Meta:
@@ -259,7 +260,7 @@ class KTInventoryNumbersModel(models.Model):
     """Таблица зыкрытых инвентарных номеров"""
     inventory_number = models.CharField(verbose_name="КТ инвентарный номер", max_length=8)
     general_info = models.OneToOneField(GeneralInfoInventoryNumberModel, verbose_name='Общая информация',
-                                     on_delete=models.CASCADE)
+                                        on_delete=models.CASCADE)
     actual = models.BooleanField(verbose_name='Актуальный', default=True)
 
     class Meta:
@@ -284,3 +285,71 @@ class TypeOfInventoryNumberModel(models.Model):
 
     def __str__(self):
         return f'{self.number_of_code_in_ms_access} - {self.name_of_type}'
+
+
+# Номера разрешений
+class GeneralInfoPermissionNumberModel(models.Model):
+    """Таблица общей информации по номерам разрешений"""
+    order = models.ForeignKey(OrdersModel, verbose_name='Заказчик', on_delete=models.SET_NULL, null=True)
+    object_name = models.ForeignKey(ObjectModel, verbose_name='Объект', on_delete=models.SET_NULL, null=True)
+    employee = models.ForeignKey(EmployeeModel, verbose_name='Сотрудник', on_delete=models.SET_NULL, null=True)
+    date_add = models.DateField(verbose_name='Дата регистрации', auto_now_add=True, null=False)
+    return_date = models.DateField(verbose_name='Дата возврата', null=True, blank=True)
+
+    class Meta:
+        verbose_name = _("общая информация о номере разрешения")
+        verbose_name_plural = _("общая информация о номерах разрешений")
+
+    def __str__(self):
+        return f'{self.id} - {self.order.order}.{self.object_name.object_code}, {self.date_add}'
+
+
+class TypeOfPermissionNumberModel(models.Model):
+    """Типы разрешений"""
+    name_of_type = models.CharField(verbose_name="Название разрешения", max_length=100)
+    number_of_code_in_ms_access = models.IntegerField(verbose_name='КодТипДокИзм в MS Access')
+
+    class Meta:
+        verbose_name = _('тип номера на разрешение')
+        verbose_name_plural = _('типы номеров на разрешения')
+
+    def __str__(self):
+        return f'{self.number_of_code_in_ms_access} - {self.name_of_type}'
+
+
+class PermissionNumbersModel(models.Model):
+    """Таблица номеров разрешений для изменения"""
+    permission_number = models.CharField(verbose_name="Номер разрешения", max_length=8)
+    general_info = models.OneToOneField(GeneralInfoPermissionNumberModel, verbose_name='Общая информация',
+                                        on_delete=models.CASCADE)
+    actual = models.BooleanField(verbose_name='Актуальный', default=True)
+
+    class Meta:
+        verbose_name = _('открытый инвентарный номер')
+        verbose_name_plural = _('открытие инвентарные номера')
+
+    def __str__(self):
+        if self.actual is True:
+            actual_str = 'Актуальный'
+        else:
+            actual_str = 'Аннулирован'
+        return f'{self.permission_number} ({actual_str})'
+
+
+class ReplacementPermissionNumbersModel(models.Model):
+    """Таблица номеров разрешений для изменения"""
+    permission_number = models.CharField(verbose_name="Номер разрешения на подмену", max_length=8)
+    general_info = models.OneToOneField(GeneralInfoPermissionNumberModel, verbose_name='Общая информация',
+                                        on_delete=models.CASCADE)
+    actual = models.BooleanField(verbose_name='Актуальный', default=True)
+
+    class Meta:
+        verbose_name = _('открытый инвентарный номер')
+        verbose_name_plural = _('открытие инвентарные номера')
+
+    def __str__(self):
+        if self.actual is True:
+            actual_str = 'Актуальный'
+        else:
+            actual_str = 'Аннулирован'
+        return f'{self.permission_number} ({actual_str})'

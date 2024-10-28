@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import GeneralInfoInventoryNumberModel, CloseInventoryNumbersModel, OpenInventoryNumbersModel, \
-    KTInventoryNumbersModel, TypeOfInventoryNumberModel
+    KTInventoryNumbersModel, TypeOfInventoryNumberModel, TypeOfPermissionNumberModel, ReplacementPermissionNumbersModel, \
+    GeneralInfoPermissionNumberModel, PermissionNumbersModel
 
 
 class GeneralInfoInventoryNumberAdmin(admin.ModelAdmin):
@@ -24,11 +25,18 @@ class KTInventoryNumbersAdmin(admin.ModelAdmin):
     search_fields = ['general_info__employee']
     list_filter = ('general_info__order', 'general_info__object_name', 'actual')
 
+
 class TypeOfInventoryNumberAdmin(admin.ModelAdmin):
     ordering = ['number_of_code_in_ms_access']
+
+
+class TypeOfPermissionNumberAdmin(admin.ModelAdmin):
+    ordering = ['number_of_code_in_ms_access']
+
 
 admin.site.register(GeneralInfoInventoryNumberModel, GeneralInfoInventoryNumberAdmin)
 admin.site.register(CloseInventoryNumbersModel, CloseInventoryNumbersAdmin)
 admin.site.register(OpenInventoryNumbersModel, OpenInventoryNumbersAdmin)
 admin.site.register(KTInventoryNumbersModel, KTInventoryNumbersAdmin)
 admin.site.register(TypeOfInventoryNumberModel, TypeOfInventoryNumberAdmin)
+admin.site.register(TypeOfPermissionNumberModel, TypeOfPermissionNumberAdmin)

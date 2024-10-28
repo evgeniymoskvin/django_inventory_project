@@ -315,3 +315,43 @@ nav ul, nav li {
     height: 21px;
     padding-left: 16px; /* Or size of icon + spacing */
 }
+
+.icon-dsp-menu {
+    background-image: url('../icons/dsp.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 15px;
+    padding-left: 16px; /* Or size of icon + spacing */
+}
+
+.icon-open-menu {
+    background-image: url('../icons/number.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 15px;
+    padding-left: 16px; /* Or size of icon + spacing */
+}
+
+.icon-r-menu {
+    background-image: url('../icons/r.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 15px;
+    padding-left: 16px; /* Or size of icon + spacing */
+}
+
+.icon-new-inventory-menu {
+    background-image: url('../icons/square-plus-solid.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 15px;
+    padding-left: 16px; /* Or size of icon + spacing */
+}
+
+.icon-new-permission-menu {
+    background-image: url('../icons/square-parking-solid.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 15px;
+    padding-left: 16px; /* Or size of icon + spacing */
+}
