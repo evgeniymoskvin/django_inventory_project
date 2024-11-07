@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import GeneralInfoInventoryNumberModel, CloseInventoryNumbersModel, OpenInventoryNumbersModel, \
     KTInventoryNumbersModel, TypeOfInventoryNumberModel, TypeOfPermissionNumberModel, ReplacementPermissionNumbersModel, \
-    GeneralInfoPermissionNumberModel, PermissionNumbersModel
+    GeneralInfoPermissionNumberModel, PermissionNumbersModel, ContractModel, ObjectModel, CpeModel
 
 
 class GeneralInfoInventoryNumberAdmin(admin.ModelAdmin):
@@ -32,6 +32,17 @@ class TypeOfInventoryNumberAdmin(admin.ModelAdmin):
 
 class TypeOfPermissionNumberAdmin(admin.ModelAdmin):
     ordering = ['number_of_code_in_ms_access']
+class ContractAdmin(admin.ModelAdmin):
+    list_filter = ('contract_object', 'contract_code', 'contract_name', 'show')
+    ordering = ['contract_object__object_code', 'contract_name', 'contract_code']
+
+class ObjectAdmin(admin.ModelAdmin):
+    list_filter = ('object_code', 'object_name')
+    ordering = ['object_code', 'object_name']
+class CpeAdmin(admin.ModelAdmin):
+    search_fields = ['cpe_object', 'cpe_user']
+    list_filter = ('cpe_user', 'cpe_object')
+    ordering = ['cpe_object', 'cpe_user']
 
 
 admin.site.register(GeneralInfoInventoryNumberModel, GeneralInfoInventoryNumberAdmin)
@@ -40,3 +51,7 @@ admin.site.register(OpenInventoryNumbersModel, OpenInventoryNumbersAdmin)
 admin.site.register(KTInventoryNumbersModel, KTInventoryNumbersAdmin)
 admin.site.register(TypeOfInventoryNumberModel, TypeOfInventoryNumberAdmin)
 admin.site.register(TypeOfPermissionNumberModel, TypeOfPermissionNumberAdmin)
+admin.site.register(ContractModel, ContractAdmin)
+admin.site.register(ObjectModel, ObjectAdmin)
+admin.site.register(CpeModel, CpeAdmin)
+

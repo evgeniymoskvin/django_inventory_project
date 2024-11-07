@@ -206,9 +206,12 @@ class GeneralInfoInventoryNumberModel(models.Model):
     """Таблица общей информации по инвентарным номерам"""
     order = models.ForeignKey(OrdersModel, verbose_name='Заказчик', on_delete=models.SET_NULL, null=True)
     object_name = models.ForeignKey(ObjectModel, verbose_name='Объект', on_delete=models.SET_NULL, null=True)
-    employee = models.ForeignKey(EmployeeModel, verbose_name='Сотрудник', on_delete=models.SET_NULL, null=True)
+    employee = models.ForeignKey(EmployeeModel, verbose_name='Сотрудник', on_delete=models.SET_NULL, null=True,
+                                 related_name='emp_employee')
     date_add = models.DateField(verbose_name='Дата регистрации', auto_now_add=True, null=False)
     return_date = models.DateField(verbose_name='Дата возврата', null=True, blank=True)
+    cpe = models.ForeignKey(EmployeeModel, verbose_name='ГИП', on_delete=models.SET_NULL, null=True, blank=True,
+                            related_name='cpe_employee')
 
     class Meta:
         verbose_name = _("общая информация об инвентарном номере")
@@ -292,9 +295,12 @@ class GeneralInfoPermissionNumberModel(models.Model):
     """Таблица общей информации по номерам разрешений"""
     order = models.ForeignKey(OrdersModel, verbose_name='Заказчик', on_delete=models.SET_NULL, null=True)
     object_name = models.ForeignKey(ObjectModel, verbose_name='Объект', on_delete=models.SET_NULL, null=True)
-    employee = models.ForeignKey(EmployeeModel, verbose_name='Сотрудник', on_delete=models.SET_NULL, null=True)
+    employee = models.ForeignKey(EmployeeModel, verbose_name='Сотрудник', on_delete=models.SET_NULL, null=True,
+                                 related_name='emp_perm_employee')
     date_add = models.DateField(verbose_name='Дата регистрации', auto_now_add=True, null=False)
     return_date = models.DateField(verbose_name='Дата возврата', null=True, blank=True)
+    cpe = models.ForeignKey(EmployeeModel, verbose_name='ГИП', on_delete=models.SET_NULL, null=True, blank=True,
+                            related_name='cpe_perm_employee')
 
     class Meta:
         verbose_name = _("общая информация о номере разрешения")

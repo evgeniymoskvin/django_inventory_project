@@ -212,70 +212,6 @@ nav ul, nav li {
     padding-left: 16px; /* Or size of icon + spacing */
 }
 
-.icon-search-menu {
-    background-image: url('../icons/magnifying-glass-solid.svg');
-    background-position: center center;
-    background-repeat: no-repeat;
-    height: 21px;
-    padding-left: 16px; /* Or size of icon + spacing */
-}
-
-.icon-outgoing_to_sign-menu {
-    background-image: url('../icons/paper-plane-solid.svg');
-    background-position: center center;
-    background-repeat: no-repeat;
-    height: 21px;
-    padding-left: 16px; /* Or size of icon + spacing */
-}
-
-.icon-people-pulling-solid-menu {
-    background-image: url('../icons/people-pulling-solid.svg');
-    background-position: center center;
-    background-repeat: no-repeat;
-    height: 21px;
-    padding-left: 16px; /* Or size of icon + spacing */
-}
-
-.icon-arrows-down-to-people-solid-menu {
-    background-image: url('../icons/arrows-down-to-people-solid.svg');
-    background-position: center center;
-    background-repeat: no-repeat;
-    height: 21px;
-    padding-left: 16px; /* Or size of icon + spacing */
-}
-
-.icon-right-to-bracket-solid-menu {
-    background-image: url('../icons/signature-solid.svg');
-    background-position: center center;
-    background-repeat: no-repeat;
-    height: 21px;
-    padding-left: 16px; /* Or size of icon + spacing */
-}
-
-.icon-box-menu {
-    background-image: url('../icons/box-solid.svg');
-    background-position: center center;
-    background-repeat: no-repeat;
-    height: 21px;
-    padding-left: 16px; /* Or size of icon + spacing */
-}
-
-.icon-boxes-menu {
-    background-image: url('../icons/people-group-solid.svg');
-    background-position: center center;
-    background-repeat: no-repeat;
-    height: 21px;
-    padding-left: 16px; /* Or size of icon + spacing */
-}
-
-.icon-angles-up-solid-menu {
-    background-image: url('../icons/angles-up-solid.svg');
-    background-position: center center;
-    background-repeat: no-repeat;
-    height: 21px;
-    padding-left: 16px; /* Or size of icon + spacing */
-}
-
 .icon-angle-up-solid-menu {
     background-image: url('../icons/angle-up-solid.svg');
     background-position: center center;
@@ -284,32 +220,9 @@ nav ul, nav li {
     padding-left: 16px; /* Or size of icon + spacing */
 }
 
-.icon-angles-down-solid-menu {
-    background-image: url('../icons/angles-down-solid.svg');
-    background-position: center center;
-    background-repeat: no-repeat;
-    height: 21px;
-    padding-left: 16px; /* Or size of icon + spacing */
-}
 
 .icon-power-off-menu {
     background-image: url('../icons/power-off-solid.svg');
-    background-position: center center;
-    background-repeat: no-repeat;
-    height: 21px;
-    padding-left: 16px; /* Or size of icon + spacing */
-}
-
-.icon-sliders {
-    background-image: url('../icons/sliders-solid.svg');
-    background-position: center center;
-    background-repeat: no-repeat;
-    height: 15px;
-    margin-left: -17px;
-}
-
-.icon-favorites-menu {
-    background-image: url('../icons/bookmark-regular.svg');
     background-position: center center;
     background-repeat: no-repeat;
     height: 21px;

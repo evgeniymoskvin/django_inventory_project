@@ -338,6 +338,7 @@ html {
 }
 
 
+
 .input_text_clearance {
     width: auto;
     height: 45px;
@@ -348,6 +349,11 @@ html {
     /*box-shadow: 2px 4px 11px -3px rgba(2, 94, 161, 0.45);*/
     font-size: 20px;
     font-family: "Rosatom_regular", serif;
+}
+
+.input_text_clearance_paddings {
+    padding: 10px 10px;
+    font-size: 16px;
 }
 
 .input_text_clearance:disabled {
