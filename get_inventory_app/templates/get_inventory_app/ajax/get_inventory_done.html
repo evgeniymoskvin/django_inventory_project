@@ -5,9 +5,10 @@
 </div>
 
 <div class="modal-body modal-body_clearance">
-    <div class="d-flex w-100 justify-content-between align-items-center">
-        <div class="d-flex text-20px-light">{{ new_inventory_number.inventory_number }}</div>
-
+    <div class="d-flex flex-column w-100 justify-content-between align-items-center">
+        {% for inventory in final_inventory_list %}
+            <div class="d-flex text-20px-light">{{ inventory }}</div>
+        {% endfor %}
     </div>
 </div>
 <div class="modal-footer modal-footer_clearance justify-content-center">

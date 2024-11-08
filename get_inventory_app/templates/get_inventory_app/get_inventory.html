@@ -6,9 +6,6 @@
 
 {% block content %}
 
-    {% if user.is_superuser %}
-        test
-    {% endif %}
     <div class="d-flex flex-column w-100 align-items-center justify-content-center" id="all_file_block">
         <form method="POST" class="my_form d-flex w-50 flex-column align-items-start justify-content-center"
               id="form_get_inventory"
@@ -70,9 +67,10 @@
                 <div class="d-flex flex-row justify-content-between align-items-center mt-2">
                     <div class="d-flex">
                         <input class="input_text_clearance input_text_clearance_paddings" style="width: 415px"
-                                name="count_of_inventory_number"
-                                required
-                        placeholder="Количество инвентарных номеров">
+                               name="count_of_inventory_number"
+                               required
+                               type="number"
+                               placeholder="Количество инвентарных номеров">
                     </div>
                 </div>
 

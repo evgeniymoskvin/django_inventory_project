@@ -47,47 +47,51 @@ class IndexView(View):
         object_id = int(request.POST['object_id'])
         object_name = ObjectModel.objects.get(id=object_id).object_code
         type_of_inventory_number = int(request.POST['type_of_inventory_number'])
+        count_of_inventory_number = int(request.POST['count_of_inventory_number'])
+        final_inventory_list = []
         try:
             cpe = CpeModel.objects.get_queryset().filter(cpe_object_id=object_id).filter(cpe_important=True).first()
             cpe_str = f'{cpe.cpe_user.last_name} {cpe.cpe_user.first_name[:1]}.{cpe.cpe_user.middle_name[:1]}'
         except Exception as e:
             print(e)
             cpe_str = 'Не указан'
-        r = requests.post(f'{API_ADDRESS}/post', params={'order': f'{order_number}.{object_name}',
-                                                         'employee': f'{employee.last_name} {employee.first_name[:1]}.{employee.middle_name[:1]}.',
-                                                         'cpe': cpe_str,
-                                                         'department': f'{employee.department.command_number}',
-                                                         'phone': f'{employee.user_phone}',
-                                                         'type_of_inventory_number': type_of_inventory_number})
-        response_data = json.loads(r.text)
-        print(type(response_data), response_data)
-        general_info = GeneralInfoInventoryNumberModel()
-        general_info.order_id = order_id
-        general_info.object_name_id = object_id
-        general_info.employee = employee
-        general_info.save()
-        if type_of_inventory_number == 1:
-            # Открытый инвентарный номер
-            new_inventory_number = OpenInventoryNumbersModel()
-            new_inventory_number.inventory_number = response_data['new_inventory']
-            new_inventory_number.general_info = general_info
-            new_inventory_number.save()
-            logging.info(f'Взят открытый номер {new_inventory_number.inventory_number}. {general_info.date_add}')
-        elif type_of_inventory_number == 2:
-            # Закрытый инвентарный номер
-            new_inventory_number = CloseInventoryNumbersModel()
-            new_inventory_number.inventory_number = response_data['new_inventory']
-            new_inventory_number.general_info = general_info
-            new_inventory_number.save()
-            logging.info(f'Взят закрытый номер {new_inventory_number.inventory_number}. {general_info.date_add}')
-        else:
-            logging.warning(f'Тип документации {type_of_inventory_number} не найден')
-            general_info.delete()
-            return HttpResponse(status=500)
+        for i in range(count_of_inventory_number):
+            r = requests.post(f'{API_ADDRESS}/post', params={'order': f'{order_number}.{object_name}',
+                                                             'employee': f'{employee.last_name} {employee.first_name[:1]}.{employee.middle_name[:1]}.',
+                                                             'cpe': cpe_str,
+                                                             'department': f'{employee.department.command_number}',
+                                                             'phone': f'{employee.user_phone}',
+                                                             'type_of_inventory_number': type_of_inventory_number})
+            response_data = json.loads(r.text)
+            print(type(response_data), response_data)
+            general_info = GeneralInfoInventoryNumberModel()
+            general_info.order_id = order_id
+            general_info.object_name_id = object_id
+            general_info.employee = employee
+            general_info.save()
+            if type_of_inventory_number == 1:
+                # Открытый инвентарный номер
+                new_inventory_number = OpenInventoryNumbersModel()
+                new_inventory_number.inventory_number = response_data['new_inventory']
+                new_inventory_number.general_info = general_info
+                new_inventory_number.save()
+                logging.info(f'Взят открытый номер {new_inventory_number.inventory_number}. {general_info.date_add}')
+            elif type_of_inventory_number == 2:
+                # Закрытый инвентарный номер
+                new_inventory_number = CloseInventoryNumbersModel()
+                new_inventory_number.inventory_number = response_data['new_inventory']
+                new_inventory_number.general_info = general_info
+                new_inventory_number.save()
+                logging.info(f'Взят закрытый номер {new_inventory_number.inventory_number}. {general_info.date_add}')
+            else:
+                logging.warning(f'Тип документации {type_of_inventory_number} не найден')
+                general_info.delete()
+                return HttpResponse(status=500)
+            final_inventory_list.append(new_inventory_number.inventory_number)
         content = {
-            'new_inventory_number': new_inventory_number,
-            'general_info': general_info
+            'final_inventory_list': final_inventory_list,
         }
+
         return render(request, 'get_inventory_app/ajax/get_inventory_done.html', content)
 
 
