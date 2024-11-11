@@ -87,10 +87,6 @@
 
     <div id="inside_text"></div>
 
-    <div id="loader-big" class=" w-100 align-items-center justify-content-center d-none flex-column">
-        {#            <p class="text-18px-bold d-flex" style="color: #202022">Работаем</p>#}
-        <span class="loader-big d-flex"></span>
-    </div>
 
     <div id="drop_file" class=" w-100 align-items-center justify-content-center d-none flex-column">
         {#            <p class="text-18px-bold d-flex" style="color: #202022">Отпустите файл здесь</p>#}
@@ -101,11 +97,7 @@
 
     <!-- Модальное окно успешной отправки-->
     <div class="modal fade" id="good_send_modal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-dialog_clearance">
-            <div class="modal-content modal-content_clearance" id="inside_good_modal">
 
-            </div>
-        </div>
     </div>
 
 
@@ -183,14 +175,23 @@
         $('#form_get_inventory').submit(function (e) {
             e.preventDefault()
             let dataToSend = $('#form_get_inventory').serialize()
+            $('#div_content').removeClass('d-flex')
+            $('#div_content').addClass('d-none')
+            $('#loader-big').removeClass('d-none')
+            $('#loader-big').addClass('d-flex')
             $.ajax({
                 type: "POST",
                 data: dataToSend,
                 success: function (data) {
-                    $("#inside_good_modal").html(data);
+                    $('#loader-big').removeClass('d-flex')
+                    $('#loader-big').addClass('d-none')
+                    $('#div_content').removeClass('d-none')
+                    $('#div_content').addClass('d-flex')
+                    $("#good_send_modal").html(data);
                     $('#good_send_modal').modal('show');
                     console.log(data);
                     $('#form_get_inventory').trigger('reset');
+
                 },
                 error: function () {
                     $('#error_modal').modal('show');

@@ -47,7 +47,7 @@
                 </div>
                 <div class="d-flex w-100 flex-row justify-content-between align-items-center">
                     <div class="d-flex text-20px-light ">ГИП</div>
-                    <div class="d-flex text-20px-light padding-left-30 text-align-end">{{ cpe }}</div>
+                    <div class="d-flex text-20px-light padding-left-30 text-align-end">{{ obj.general_info.cpe.last_name }} {{ obj.general_info.cpe.first_name|slice:1 }}. {{ obj.general_info.cpe.middle_name|slice:1 }}.</div>
                 </div>
             </div>
             {% comment %}

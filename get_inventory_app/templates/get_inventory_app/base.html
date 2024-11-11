@@ -50,9 +50,15 @@
     </div>
 </a>
 
-<div class="d-flex container back-search min-vh-100">
+<div class="d-flex container back-search min-vh-100" id="div_content">
     {% block content %}
     {% endblock %}
+</div>
+
+<div id="loader-big" class=" w-100 min-vh-100 align-items-center justify-content-center d-none flex-column">
+    {#            <p class="text-18px-bold d-flex" style="color: #202022">Работаем</p>#}
+    <span class="loader-big d-flex"></span>
+    <div class="d-flex text-24px-bold">Запрос обрабатывается</div>
 </div>
 
 </body>
