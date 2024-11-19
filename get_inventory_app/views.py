@@ -3,20 +3,20 @@ import json
 import os
 import logging
 
-from django.http import HttpResponse
+from django.http import HttpResponse, FileResponse
 from django.shortcuts import render, redirect
 from django.views import View
 from .models import OrdersModel, ObjectModel, EmployeeModel, CpeModel, TypeOfInventoryNumberModel, \
     OpenInventoryNumbersModel, GeneralInfoInventoryNumberModel, CloseInventoryNumbersModel, \
     GeneralInfoPermissionNumberModel, ReplacementPermissionNumbersModel, TypeOfPermissionNumberModel, \
-    PermissionNumbersModel
+    PermissionNumbersModel, ArchiveFilesModel
 from dotenv import load_dotenv
 import requests
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
 load_dotenv()
-API_ADDRESS = os.getenv('API_ADDRESS')
+API_ADDRESS_ARCHIVE = os.getenv('API_ADDRESS_ARCHIVE')
 logging.basicConfig(level=logging.INFO, filename="py_log.log", filemode="w")
 
 
@@ -292,3 +292,16 @@ class DetailsPermissionNumberModalView(View):
         content = {'obj': inventory_number_object,
                    'cpe': f'{cpe.cpe_user.last_name} {cpe.cpe_user.first_name[:1]}.{cpe.cpe_user.middle_name[:1]}'}
         return render(request, 'get_inventory_app/ajax/details_inventory_number.html', content)
+
+
+class SearchInArchiveView(View):
+    def get(self, request):
+        pass
+
+class DownloadAlbumView(View):
+    def get(self, request, pk):
+        print(pk)
+        req = requests.get(f'{API_ADDRESS_ARCHIVE}/download_album_api/{pk}', stream=True)
+        print(req)
+        # obj = ArchiveFilesModel.objects.get(id=pk)
+        return redirect(f'{API_ADDRESS_ARCHIVE}/download_album_api/{pk}')

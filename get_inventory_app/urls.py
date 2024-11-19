@@ -26,4 +26,5 @@ urlpatterns = [
     path('my_replacement_permission_numbers', views.MyReplacementPermissionNumbers.as_view(), name='my_replacement_permission_numbers'),
     path('ajax/details-inventory-number-modal', views.DetailsInventoryNumberModalView.as_view(), name='details-modal'),
     path('ajax/details-permission-inventory-number-modal', views.DetailsPermissionNumberModalView.as_view(), name='details-permission-modal'),
+    path('api/download_album/<int:pk>', views.DownloadAlbumView.as_view(), name='download-album'),
 ]
