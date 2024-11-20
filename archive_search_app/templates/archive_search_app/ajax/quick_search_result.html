@@ -1,0 +1,30 @@
+
+{% comment %}<div class="search_result d-flex">
+    <table>
+        {#начало иф#}
+        {% for search_result in search_results %}
+        <tr>
+            <td class="search_result-name">
+                <a href="#">{{ search_result.album_name}}</a>
+            </td>
+            <td class="search_result-btn">
+                <a href="#">Перейти</a>
+            </td>
+        </tr>
+        {% endfor %}
+        {#конец ифа#}
+    </table>
+</div>
+{% endcomment %}
+
+<div class="d-flex flex-column w-100 search_result_all_positions">
+    {% for search_result in search_results %}
+        <div class="d-flex text-20px-light align-items-center w-100 flex-row">
+            {% if not search_result.file_was_deleted %}
+            <div class="d-flex w-100 search_result_position align-items-center" onclick="location.href='{% url 'download-album' search_result.id %}'">{{ search_result.album_name}}</div>
+            {% else %}
+            <div class="d-flex w-100 search_result_position_lost align-items-center" style="color: red">{{ search_result.album_name}} (Удален)</div>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>

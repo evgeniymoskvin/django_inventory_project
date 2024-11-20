@@ -1,0 +1,29 @@
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content  modal-content_clearance">
+        <div class="modal-header modal-header_clearance">
+            {% if count_inventory == 1 %}
+            <h5 class="modal-title text-22px-regular" style="cursor: context-menu">Получен инвентарный номер</h5>
+            {% else %}
+            <h5 class="modal-title text-22px-regular" style="cursor: context-menu">Получены инвентарные номера</h5>
+            {% endif %}
+            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body modal-body_clearance">
+            <div class="d-flex flex-column flex-wrap w-100 align-items-center">
+                {% for inventory in final_inventory_list %}
+                    <div class="d-flex text-20px-light">{{ inventory }}</div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="modal-footer modal-footer_clearance justify-content-center">
+
+            <button class="button_blue_clearance"
+                    onclick="$('#good_send_modal').modal('hide');
+            ">
+                Ок
+            </button>
+        </div>
+    </div>
+</div>

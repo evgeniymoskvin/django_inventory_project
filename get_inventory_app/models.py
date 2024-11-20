@@ -376,3 +376,18 @@ class ArchiveFilesModel(models.Model):
 
     def __str__(self):
         return f'{self.album_name} (md5:{self.md5_file}) {self.file_path}'
+
+class LogsDownloadsAlbum(models.Model):
+    """logs скачивания файлов"""
+    download_file_key = models.ForeignKey(ArchiveFilesModel, verbose_name='id скаченного альбома', on_delete=models.SET_NULL, null=True, blank=True)
+    download_file_name = models.CharField(verbose_name='Название скаченного альбома', max_length=20, null=True, blank=True)
+    download_emp_Key = models.ForeignKey(EmployeeModel, verbose_name='id сотрудника скачавшего', on_delete=models.SET_NULL, max_length=20, null=True, blank=True)
+    download_emp_name = models.CharField(verbose_name='Имя сотрудника скачавшего', max_length=100, null=True, blank=True)
+    download_date = models.DateTimeField(verbose_name='Дата и время скачивания', auto_now_add=True, null=False)
+
+    class Meta:
+        verbose_name = _('log загрузки')
+        verbose_name_plural = _('logs закгрузок')
+
+    def __str__(self):
+        return f'{self.download_file_name} - {self.download_emp_name} - {self.download_date}'

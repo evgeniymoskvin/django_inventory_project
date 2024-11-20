@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import GeneralInfoInventoryNumberModel, CloseInventoryNumbersModel, OpenInventoryNumbersModel, \
     KTInventoryNumbersModel, TypeOfInventoryNumberModel, TypeOfPermissionNumberModel, ReplacementPermissionNumbersModel, \
-    GeneralInfoPermissionNumberModel, PermissionNumbersModel, ContractModel, ObjectModel, CpeModel
+    GeneralInfoPermissionNumberModel, PermissionNumbersModel, ContractModel, ObjectModel, CpeModel, LogsDownloadsAlbum, ArchiveFilesModel
 
 
 class GeneralInfoInventoryNumberAdmin(admin.ModelAdmin):
@@ -43,6 +43,14 @@ class CpeAdmin(admin.ModelAdmin):
     search_fields = ['cpe_object', 'cpe_user']
     list_filter = ('cpe_user', 'cpe_object')
     ordering = ['cpe_object', 'cpe_user']
+class ArchiveFilesAdmin(admin.ModelAdmin):
+    search_fields = ['album_name', 'md5_file']
+    list_filter = ('file_was_deleted', )
+    ordering = ['album_name']
+class LogsDownloadsAdmin(admin.ModelAdmin):
+    search_fields = ['download_file_key', 'download_file_name', 'download_emp_name']
+    ordering = ['-id']
+
 
 
 admin.site.register(GeneralInfoInventoryNumberModel, GeneralInfoInventoryNumberAdmin)
@@ -54,4 +62,6 @@ admin.site.register(TypeOfPermissionNumberModel, TypeOfPermissionNumberAdmin)
 admin.site.register(ContractModel, ContractAdmin)
 admin.site.register(ObjectModel, ObjectAdmin)
 admin.site.register(CpeModel, CpeAdmin)
+admin.site.register(ArchiveFilesModel, ArchiveFilesAdmin)
+admin.site.register(LogsDownloadsAlbum, LogsDownloadsAdmin)
 

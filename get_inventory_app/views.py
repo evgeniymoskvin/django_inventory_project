@@ -16,7 +16,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
 load_dotenv()
-API_ADDRESS_ARCHIVE = os.getenv('API_ADDRESS_ARCHIVE')
+API_ADDRESS = os.getenv('API_ADDRESS')
 logging.basicConfig(level=logging.INFO, filename="py_log.log", filemode="w")
 
 
@@ -294,14 +294,3 @@ class DetailsPermissionNumberModalView(View):
         return render(request, 'get_inventory_app/ajax/details_inventory_number.html', content)
 
 
-class SearchInArchiveView(View):
-    def get(self, request):
-        pass
-
-class DownloadAlbumView(View):
-    def get(self, request, pk):
-        print(pk)
-        req = requests.get(f'{API_ADDRESS_ARCHIVE}/download_album_api/{pk}', stream=True)
-        print(req)
-        # obj = ArchiveFilesModel.objects.get(id=pk)
-        return redirect(f'{API_ADDRESS_ARCHIVE}/download_album_api/{pk}')

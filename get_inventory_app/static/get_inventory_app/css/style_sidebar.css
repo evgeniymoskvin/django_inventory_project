@@ -212,6 +212,15 @@ nav ul, nav li {
     padding-left: 16px; /* Or size of icon + spacing */
 }
 
+
+.icon-all-services-menu {
+    background-image: url('../icons/menu-2-svgrepo-com.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 30px;
+    padding-left: 16px; /* Or size of icon + spacing */
+}
+
 .icon-angle-up-solid-menu {
     background-image: url('../icons/angle-up-solid.svg');
     background-position: center center;
@@ -273,5 +282,12 @@ nav ul, nav li {
     background-position: center center;
     background-repeat: no-repeat;
     height: 15px;
+    padding-left: 16px; /* Or size of icon + spacing */
+}
+.icon-search-archive-menu {
+    background-image: url('../icons/search_archive.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 20px;
     padding-left: 16px; /* Or size of icon + spacing */
 }

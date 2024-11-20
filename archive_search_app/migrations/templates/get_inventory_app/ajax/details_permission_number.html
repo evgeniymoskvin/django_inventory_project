@@ -1,0 +1,66 @@
+<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog_change-status">
+    <div class="modal-content modal-content_clearance">
+        <div class="modal-header modal-header_clearance">
+            <h5 class="modal-title text-24px-regular"
+                style="cursor: context-menu">Детали</h5>
+            <div>
+                {% comment %}
+                <button id="change_lists" class="icon-edit-lists" data-bs-dismiss="modal"
+                        aria-label="Close" data-ajax-id='{{ obj.id }}'></button>
+                <button id="change_task" class="icon-edit" data-bs-dismiss="modal"
+                        aria-label="Close" data-ajax-id='{{ obj.id }}'></button>
+                {% endcomment %}
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+        </div>
+
+        <form id="form_send_status_file" method="POST" action="" data-ajax-url="">
+            {% csrf_token %}
+            <div class="modal-body modal-body_clearance">
+                <div class="d-flex w-100 flex-row justify-content-between align-items-center">
+                    <div class="d-flex text-20px-light ">Инв. №</div>
+                    <div class="d-flex text-20px-light padding-left-30 text-align-end">{{ obj.inventory_number }}</div>
+                </div>
+                {% comment %}
+                <div class="d-flex w-100 flex-row justify-content-between align-items-center">
+                    <div class="d-flex text-20px-light ">Статус</div>
+                    <div class="d-flex text-20px-light padding-left-30 text-align-end">
+                        {% if obj.actual %}
+                            Актуальный
+                        {% else %}
+                            Возвращен
+                        {% endif %}
+                    </div>
+                </div>
+                {% endcomment %}
+                <div class="d-flex w-100 flex-row justify-content-between align-items-center">
+                    <div class="d-flex text-20px-light ">Взят</div>
+                    <div class="d-flex text-20px-light padding-left-30 text-align-end">{{ obj.general_info.date_add }}</div>
+                </div>
+                <div class="d-flex w-100 flex-row justify-content-between align-items-center">
+                    <div class="d-flex text-20px-light ">Заказчик</div>
+                    <div class="d-flex text-20px-light padding-left-30 text-align-end">{{ obj.general_info.order }}</div>
+                </div>
+                <div class="d-flex w-100 flex-row justify-content-between align-items-center">
+                    <div class="d-flex text-20px-light ">Объект</div>
+                    <div class="d-flex text-20px-light padding-left-30 text-align-end">{{ obj.general_info.object_name|truncatechars:75 }}</div>
+                </div>
+                <div class="d-flex w-100 flex-row justify-content-between align-items-center">
+                    <div class="d-flex text-20px-light ">ГИП</div>
+                    <div class="d-flex text-20px-light padding-left-30 text-align-end">{{ cpe }}</div>
+                </div>
+            </div>
+            {% comment %}
+            <div class="modal-footer modal-footer_clearance justify-content-between">
+                <button type="button" class="button_grey_clearance"
+                        data-bs-dismiss="modal"
+                        onclick="$('#sendFileModal').modal('hide');">Отмена
+                </button>
+                <button class="button_blue_clearance button_blue_clearance_send_file" type="submit">
+                    Сохранить
+                </button>
+            </div>
+            {% endcomment %}
+        </form>
+    </div>
+</div>

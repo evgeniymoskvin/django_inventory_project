@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'get_inventory_app',
-    'login'
+    'login',
+    'archive_search_app'
 
 ]
 
@@ -126,7 +127,7 @@ MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 MEDIA_ROOT = MEDIA_DIR
 
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'index'
+LOGIN_REDIRECT_URL = 'search-in-archive'
 LOGOUT_REDIRECT_URL = 'login'
 
 

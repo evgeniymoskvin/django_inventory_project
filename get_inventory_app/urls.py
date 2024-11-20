@@ -18,7 +18,7 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('', views.IndexView.as_view(), name='index'),
+    path('get-inventory', views.IndexView.as_view(), name='get-inventory'),
     path('get-permission', views.GetPermissionView.as_view(), name='get-permission'),
     path('my_open_inventory_numbers', views.MyOpenInventoryNumbers.as_view(), name='my_open_inventory_numbers'),
     path('my_close_inventory_numbers', views.MyCloseInventoryNumbers.as_view(), name='my_close_inventory_numbers'),
@@ -26,5 +26,4 @@ urlpatterns = [
     path('my_replacement_permission_numbers', views.MyReplacementPermissionNumbers.as_view(), name='my_replacement_permission_numbers'),
     path('ajax/details-inventory-number-modal', views.DetailsInventoryNumberModalView.as_view(), name='details-modal'),
     path('ajax/details-permission-inventory-number-modal', views.DetailsPermissionNumberModalView.as_view(), name='details-permission-modal'),
-    path('api/download_album/<int:pk>', views.DownloadAlbumView.as_view(), name='download-album'),
 ]

@@ -1,0 +1,125 @@
+{% extends "get_inventory_app/base.html" %}
+{% load static %}
+{% block title %}
+    Мои инвентарные номера
+{% endblock %}
+{% block css_script %}
+    <script type="text/javascript"
+            src="{% static 'get_inventory_app/DataTables/datatables.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="d-flex w-100" id="display_div">
+        <div style="width: 100%">
+            <div class="text-36px-bold mt-5">
+                Инвентарные номера
+            </div>
+            <div class="mt-3">
+                <table id="my-inventory-numbers" class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th class="th_tables" scope="col" style="width: 30px">#</th>
+                        <th class="th_tables" scope="col" style="width: 130px; text-align: center">Инв. номер</th>
+                        <th class="th_tables" scope="col" style="width: 130px; text-align: center">Заказчик</th>
+                        <th class="th_tables" scope="col" style="width: 130px; text-align: center">Объект</th>
+                        <th class="th_tables" scope="col" style="text-align: right;">Дата получения</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for obj in open_employee_numbers %}
+                        <tr class="tr-tables" style="cursor: context-menu;"
+                            onclick="openModalWindow({{ obj.id }})">
+                            <th class="th_tables" scope="row" style="width: 30px">{{ forloop.counter }}</th>
+                            <td class="td_tables" style="width: 130px; text-align: center">
+                                {{ obj.inventory_number }}</td>
+                            <td class="td_tables" style="text-align: center">
+                                {{ obj.general_info.order.order }}</td>
+                            <td class="td_tables" style="text-align: center">
+                                {{ obj.general_info.object_name.object_code }}</td>
+                            <td class="td_tables" style="text-align: right">
+                                {{ obj.general_info.date_add }}
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="detailModalWindow" data-ajax-url="{% url 'details-modal' %}" tabindex="-1">
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            var table = $('#my-inventory-numbers').DataTable({
+                    {#order: [[1, 'asc']],#}
+                    dom:
+                    //"<'row'<'col-sm-12'tr>>",
+                    //"<'row'<'col-sm-12 col-md-2'l><'col-sm-2 col-md-2 col-xxl-4'B><'col-sm-12 col-md-6'f>>" +
+                        "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+                        "<'row'<'col-sm-12'tr>>" +
+                        //"<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+                        "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>" +
+                        "<'col-sm-2 col-md-2 col-xxl-2'B>",
+                    "language":
+                        {
+                            "lengthMenu": "_MENU_",
+                            "zeroRecords": "Записи не найдены",
+                            "info": "Показано с _START_ по _END_ из _TOTAL_ записей",
+                            "search": "Поиск:",
+                            "paginate": {
+                                "next": "Следующая",
+                                "previous": "Предыдущая"
+                            }
+                        },
+                    "aLengthMenu": [[1, 5, 10, 15, 20, 25, -1], [1, 5, 10, 15, 20, 25, "Все"]],
+                    "iDisplayLength": 15,
+                    buttons: ['pdf', 'excel']
+                }
+            );
+            table.buttons().container().appendTo($('.col-sm-6:eq(0)', table.table().container()));
+            newStyleButton()
+        });
+
+        function newStyleButton() {
+            const pdf_button = document.getElementsByClassName("btn btn-secondary buttons-pdf buttons-html5")[0]
+            console.log(pdf_button);
+            pdf_button.classList.remove("btn")
+            pdf_button.classList.remove("btn-secondary")
+            pdf_button.classList.remove("buttons-pdf")
+            pdf_button.classList.remove("buttons-html5")
+            pdf_button.textContent = ''
+            pdf_button.classList.add("pdf_button_icon")
+
+            const exel_button = document.getElementsByClassName("btn btn-secondary buttons-excel buttons-html5")[0]
+            console.log(exel_button);
+            exel_button.classList.remove("btn")
+            exel_button.classList.remove("btn-secondary")
+            exel_button.classList.remove("buttons-excel")
+            exel_button.classList.remove("buttons-html5")
+            exel_button.textContent = ''
+            exel_button.classList.add("exel_button_icon")
+        }
+
+        function openModalWindow(val) {
+            var url = $("#detailModalWindow").attr("data-ajax-url")
+            $.ajax({
+                type: "GET",
+                url: url,
+                data: {
+                    'object': val,
+                    'type': 'open'
+                },
+                success: function (data) {
+                    $("#detailModalWindow").html(data)
+                    console.log(val)
+                    $('#detailModalWindow').modal('show');
+                }
+            })
+        }
+    </script>
+
+{% endblock %}

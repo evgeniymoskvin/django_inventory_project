@@ -1,12 +1,11 @@
 {% extends "get_inventory_app/base.html" %}
 {% load static %}
 {% block title %}
-    Получить инвентарный номер
+    Номера разрешения
 {% endblock %}
 
 {% block content %}
-
-    <div class="d-flex flex-column w-100 align-items-center justify-content-center min-vh-100" id="all_file_block">
+    <div class="d-flex flex-column w-100 align-items-center justify-content-center" id="all_file_block">
         <form method="POST" class="my_form d-flex w-50 flex-column align-items-start justify-content-center"
               id="form_get_inventory"
               enctype="multipart/form-data">
@@ -15,7 +14,7 @@
                 <div class="d-flex align-items-end justify-content-end text-end">
                     <div class="d-flex flex-column">
                         <div class="d-flex text-32px-bold">
-                            Получить инвентарный номер
+                            Получить номер разрешения
                         </div>
                     </div>
                 </div>
@@ -54,28 +53,18 @@
                 <div class="d-flex flex-row justify-content-between align-items-center mt-2">
                     <div class="d-flex">
                         <select class="form-select" style="width: 415px"
-                                name="type_of_inventory_number"
+                                name="type_of_permission_number"
                                 required>
-                            <option selected value="">Тип инвентарного номера</option>
-                            {% for obj in type_of_inventory_number %}
+                            <option selected value="">Тип номера резрешения</option>
+                            {% for obj in type_of_permission_number %}
                                 <option value="{{ obj.number_of_code_in_ms_access }}">{{ obj.name_of_type }}</option>
                             {% endfor %}
                         </select>
                     </div>
                 </div>
 
-                <div class="d-flex flex-row justify-content-between align-items-center mt-2">
-                    <div class="d-flex">
-                        <input class="input_text_clearance input_text_clearance_paddings" style="width: 415px"
-                               name="count_of_inventory_number"
-                               required
-                               type="number"
-                               placeholder="Количество инвентарных номеров">
-                    </div>
-                </div>
 
-
-                <div class="d-flex flex-row justify-content-start align-items-end mt-3">
+                <div class="d-flex flex-row justify-content-start align-items-end mt-2">
                     <button class="button_blue_clearance button_blue_clearance_send_file" type="submit"
                             style="width: 200px">
                         Получить
@@ -87,6 +76,10 @@
 
     <div id="inside_text"></div>
 
+    <div id="loader-big" class=" w-100 align-items-center justify-content-center d-none flex-column">
+        {#            <p class="text-18px-bold d-flex" style="color: #202022">Работаем</p>#}
+        <span class="loader-big d-flex"></span>
+    </div>
 
     <div id="drop_file" class=" w-100 align-items-center justify-content-center d-none flex-column">
         {#            <p class="text-18px-bold d-flex" style="color: #202022">Отпустите файл здесь</p>#}
@@ -97,7 +90,11 @@
 
     <!-- Модальное окно успешной отправки-->
     <div class="modal fade" id="good_send_modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog_clearance">
+            <div class="modal-content modal-content_clearance" id="inside_good_modal">
 
+            </div>
+        </div>
     </div>
 
 
@@ -175,23 +172,14 @@
         $('#form_get_inventory').submit(function (e) {
             e.preventDefault()
             let dataToSend = $('#form_get_inventory').serialize()
-            $('#div_content').removeClass('d-flex')
-            $('#div_content').addClass('d-none')
-            $('#loader-big').removeClass('d-none')
-            $('#loader-big').addClass('d-flex')
             $.ajax({
                 type: "POST",
                 data: dataToSend,
                 success: function (data) {
-                    $('#loader-big').removeClass('d-flex')
-                    $('#loader-big').addClass('d-none')
-                    $('#div_content').removeClass('d-none')
-                    $('#div_content').addClass('d-flex')
-                    $("#good_send_modal").html(data);
+                    $("#inside_good_modal").html(data);
                     $('#good_send_modal').modal('show');
                     console.log(data);
                     $('#form_get_inventory').trigger('reset');
-
                 },
                 error: function () {
                     $('#error_modal').modal('show');

@@ -7,70 +7,55 @@
     <nav class="main-menu">
         <ul>
             <li>
-                <a href="{% url 'search-in-archive' %}" style="vertical-align: top">
+                <a href="{% url 'index' %}" style="vertical-align: top">
 
                     <i class="fa">
-                        <div class="icon-search-archive-menu"></div>
+                        <div class="icon-new-inventory-menu"></div>
                     </i>
 
                     <span class="nav-text text-menu-sidebar" style="text-transform: uppercase">
-                           Поиск в архиве
+                           Взять инвентарный номер
                         </span>
                 </a>
 
             </li>
             {% if user.is_superuser %}
                 <li>
-                    <a href="{% url 'get-inventory' %}" style="vertical-align: top">
+                    <a href="{% url 'get-permission' %}" style="vertical-align: top">
 
                         <i class="fa">
-                            <div class="icon-new-inventory-menu"></div>
+                            <div class="icon-new-permission-menu"></div>
                         </i>
 
                         <span class="nav-text text-menu-sidebar" style="text-transform: uppercase">
-                           Взять инвентарный номер
-                        </span>
-                    </a>
-
-                </li>
-                {% if user.is_superuser %}
-                    <li>
-                        <a href="{% url 'get-permission' %}" style="vertical-align: top">
-
-                            <i class="fa">
-                                <div class="icon-new-permission-menu"></div>
-                            </i>
-
-                            <span class="nav-text text-menu-sidebar" style="text-transform: uppercase">
                            Взять номер <br>разрешения
                         </span>
-                        </a>
-
-                    </li>
-                {% endif %}
-
-                <li>
-                    <a href="{% url 'my_open_inventory_numbers' %}">
-                        <i class="fa">
-                            <div class="icon-open-menu"></div>
-                        </i>
-                        <span class="nav-text text-menu-sidebar" style="text-transform: uppercase">
-                            Открытые инвентарные номера
-                        </span>
                     </a>
-                </li>
 
-                <li>
-                    <a href="{% url 'my_close_inventory_numbers' %}">
-                        <i class="fa">
-                            <div class="icon-dsp-menu"></div>
-                        </i>
-                        <span class="nav-text text-menu-sidebar" style="text-transform: uppercase">
-                            Закрытые инвентарные номера
-                        </span>
-                    </a>
                 </li>
             {% endif %}
+
+            <li>
+                <a href="{% url 'my_open_inventory_numbers' %}">
+                    <i class="fa">
+                        <div class="icon-open-menu"></div>
+                    </i>
+                    <span class="nav-text text-menu-sidebar" style="text-transform: uppercase">
+                            Открытые инвентарные номера
+                        </span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'my_close_inventory_numbers' %}">
+                    <i class="fa">
+                        <div class="icon-dsp-menu"></div>
+                    </i>
+                    <span class="nav-text text-menu-sidebar" style="text-transform: uppercase">
+                            Закрытые инвентарные номера
+                        </span>
+                </a>
+            </li>
             {% if user.is_superuser %}
                 <li>
                     <a href="{% url 'my_permission_numbers' %}">
@@ -110,16 +95,6 @@
                     </a>
                 </li>
             {% endif %}
-            <li>
-                <a href="http://start.el-spb.local">
-                    <i class="fa">
-                        <div class="icon-all-services-menu "></div>
-                    </i>
-                    <span class="nav-text text-menu-sidebar" style="text-transform: uppercase">
-                            Все сервисы
-                        </span>
-                </a>
-            </li>
             <li>
                 <a href="#">
                     <i class="fa">
