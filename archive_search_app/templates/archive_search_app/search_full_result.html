@@ -1,0 +1,135 @@
+{% extends "get_inventory_app/base.html" %}
+{% load static %}
+{% block title %}
+    Поиск в архиве
+{% endblock %}
+
+{% block content %}
+
+    <div class="d-flex flex-column w-100 min_vh_search mt-5 mb-5">
+
+        <div class="d-flex flex-column w-100 mt-5" id="all_file_block">
+            <form method="POST" class="my_form d-flex flex-column align-items-start justify-content-center w-100"
+                  id="search_form"
+                  enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="d-flex flex-column w-100" id="start_body">
+
+                    <div class="d-flex flex-column w-100">
+                        <div class="search_box d-flex text-32px-bold w-100">
+                            <input type="text" placeholder="Поиск альбома в архиве" name="search" id="search"
+                                   data-ajax-url="{% url 'quick_search' %}" autocomplete="off">
+                            <input type="submit">
+                        </div>
+                        <div class="d-flex container w-100 search_full_result" id="insert_search_result">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="d-flex flex-column w-100" id="search_result">
+            {% if len_search_result == 0 %}
+                <div class="text-18px-regular mt-3">По Вашему запросу ничего не найдено</div>
+                {% else %}
+                <div class="text-24px-light mt-3" style="padding-left: 24px">Результаты поиска:</div>
+            {% endif %}
+            {% for album in search_result %}
+                <div class="d-flex text-20px-light align-items-center w-100 flex-row">
+                    {% if not search_result.file_was_deleted %}
+                        <div class="d-flex w-100 search_result_position_full align-items-center mt-2"
+                             onclick="location.href='{% url 'download-album' album.id %}'">{{ album.album_name }}</div>
+                    {% else %}
+                        <div class="d-flex w-100 search_result_position_lost align-items-center mt-2"
+                             style="color: red">{{ album.album_name }} (Удален)
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <script>
+        $(document).ready(function () {
+            var $result = $('#search_box-result');
+            var url = $("#search").attr("data-ajax-url");
+
+            $('#search').focus(function () {
+
+                var search = $('#search').val();
+                var len_search = search.length
+
+                $("#insert_search_result").removeClass("d-none");
+                $("#insert_search_result").addClass("d-flex");
+                $("body").addClass("body_background");
+                $("#search_result").fadeTo(100, .3);
+
+                /*                if (len_search > 0) {
+                                    console.log(search.length)
+                                    $("#all_file_block").removeClass("min_vh_search");
+                                    $("#all_file_block").addClass("min_vh_search_margin_100");
+                                }*/
+
+            });
+
+            $("#insert_search_result").mousedown(function (e) {
+                e.preventDefault();
+            })
+
+
+            $("#search").focusout(function () {
+                $("#insert_search_result").addClass("d-none");
+                $("#insert_search_result").removeClass("d-flex");
+                $("body").removeClass("body_background");
+                $("#search_result").fadeTo(100, 1);
+            });
+
+            $('#search').on('keyup', function () {
+                var search = $(this).val();
+
+                if ((search != '') && (search.length > 1)) {
+                    $("#all_file_block").removeClass("min_vh_search");
+                    $("#all_file_block").addClass("min_vh_search_margin_100");
+                    let dataToSend = $('#search_form').serialize()
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: dataToSend,
+                        success: function (data) {
+                            $('#insert_search_result').html(data);
+                            if (data != '') {
+                                $('#insert_search_result').fadeIn();
+                            } else {
+                                $('#insert_search_result').fadeOut(100);
+                            }
+                        }
+                    });
+                } else {
+                    $('#insert_search_result').html('');
+                    $('#insert_search_result').fadeOut(100);
+                }
+            });
+
+            $(document).on('click', function (e) {
+                if (!$(e.target).closest('.search_box').length) {
+                    $result.html('');
+                    $result.fadeOut(100);
+                }
+            });
+
+            $(document).on('click', '.search_result-name a', function () {
+                $('#search').val($(this).text());
+                $result.fadeOut(100);
+                return false;
+            });
+
+            $(document).on('click', function (e) {
+                if (!$(e.target).closest('.search_box').length) {
+                    $result.html('');
+                    $result.fadeOut(100);
+                }
+            });
+
+        });
+    </script>
+{% endblock %}

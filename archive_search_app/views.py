@@ -27,16 +27,19 @@ class SearchInArchiveView(View):
         return render(request, 'archive_search_app/search_archive.html', content)
 
     def post(self, request):
-        print(f'request.POST: {request.POST}')
-        print(f'request.user: {request.user}')
         album = request.POST['search']
-        search_result = ArchiveFilesModel.objects.all().filter(album_name__icontains=album)
-        print(search_result)
-        print(album)
-        return HttpResponse('all ok', status=200)
+        search_result = ArchiveFilesModel.objects.all().filter(album_name__icontains=album).order_by('album_name')
+        len_search_result = len(search_result)
+        content = {
+            'search_word': request.POST['search'],
+            'search_result': search_result,
+            'len_search_result': len_search_result
+        }
+        return render(request, 'archive_search_app/search_full_result.html', content)
 
 
 class GetQuickSearchResultsView(View):
+    """Выпадающий список с предложениями"""
     def post(self, request):
         print(f'request.POST: {request.POST}')
         search = request.POST['search']

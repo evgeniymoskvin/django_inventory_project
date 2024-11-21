@@ -1045,12 +1045,29 @@ row__color {
 .search_result_all_positions {
     box-shadow: 2px 4px 11px -3px rgba(2, 94, 161, 0.45);
     border-radius: 8px;
+    background-color: white;
+}
+
+.search_full_result {
+    position: absolute;
+    z-index: 90;
+    padding-left: 0;
+    padding-right: 24px;
+    margin-top: 65px;
 }
 
 .search_result_position {
     min-height: 50px;
     padding-left: 20px;
     border-bottom: 1px solid rgba(108, 117, 125, 0.19);
+    cursor: pointer;
+}
+
+.search_result_position_full {
+    min-height: 50px;
+    padding-left: 20px;
+    border: 1px solid rgba(108, 117, 125, 0.1);
+    border-radius: 8px;
     cursor: pointer;
 }
 
@@ -1061,15 +1078,25 @@ row__color {
     cursor: context-menu;
 }
 
+.search_result_position_lost_full {
+    min-height: 50px;
+    padding-left: 20px;
+    border: 1px solid rgba(108, 117, 125, 0.19);
+    cursor: context-menu;
+}
+
 .search_result_position:hover {
     background-color: rgba(108, 172, 228, 0.11);
 }
-
-.search_result_position_lost:hover {
-    background-color: rgba(255,175,175,0.11);
+.search_result_position_full:hover {
+    background-color: rgba(108, 172, 228, 0.11);
 }
 
-.search_result_position:hover div{
+.search_result_position_lost_full:hover {
+    background-color: rgba(255, 175, 175, 0.11);
+}
+
+.search_result_position:hover div {
 
 }
 
@@ -1081,5 +1108,10 @@ row__color {
 .min_vh_search_margin_100 {
     min-height: 0;
     margin-top: 100px;
+    transition: all 0.3s ease-in-out;
+}
+
+.body_background{
+    background-color: rgba(148, 148, 148, 0.21);
     transition: all 0.3s ease-in-out;
 }
