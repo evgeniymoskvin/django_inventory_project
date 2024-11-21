@@ -362,7 +362,7 @@ class ReplacementPermissionNumbersModel(models.Model):
 
 class ArchiveFilesModel(models.Model):
     """Таблица альбомов """
-    album_name = models.CharField(unique=True, verbose_name='Наименование альбома', max_length=20, null=True, blank=True)
+    album_name = models.CharField(unique=True, verbose_name='Наименование альбома', max_length=128, null=True, blank=True)
     file_path = models.CharField(verbose_name='Путь к файлу', max_length=2500, null=True, blank=True)
     file_size = models.FloatField(verbose_name='Размер файла', max_length=50, null=True, blank=True)
     md5_file = models.CharField(unique=True, verbose_name='md5 файла', max_length=250, null=True, blank=True)
