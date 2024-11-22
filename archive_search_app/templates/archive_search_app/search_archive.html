@@ -16,7 +16,7 @@
                 <div class="d-flex flex-column w-100">
                     <div class="search_box d-flex text-32px-bold w-100">
                         <input type="text" placeholder="Поиск альбома в архиве" name="search" id="search"
-                               data-ajax-url="{% url 'quick_search' %}" autocomplete="off">
+                               data-ajax-url="{% url 'quick_search' %}" autocomplete="off"  minlength="4">
                         <input type="submit">
                     </div>
                     <div class="d-flex w-100" id="insert_search_result">
@@ -102,7 +102,7 @@
                 var search = $('#search').val();
                 var len_search = search.length
 
-                if (len_search < 1) {
+                if (len_search < 3) {
                     console.log(search.length)
                     $("#all_file_block").addClass("min_vh_search");
                     $("#all_file_block").removeClass("min_vh_search_margin_100");
@@ -112,7 +112,7 @@
             $('#search').on('keyup', function () {
                 var search = $(this).val();
 
-                if ((search != '') && (search.length > 1)) {
+                if ((search != '') && (search.length > 3)) {
                     $("#all_file_block").removeClass("min_vh_search");
                     $("#all_file_block").addClass("min_vh_search_margin_100");
                     let dataToSend = $('#search_form').serialize()
