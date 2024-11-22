@@ -380,9 +380,9 @@ class ArchiveFilesModel(models.Model):
 class LogsDownloadsAlbum(models.Model):
     """logs скачивания файлов"""
     download_file_key = models.ForeignKey(ArchiveFilesModel, verbose_name='id скаченного альбома', on_delete=models.SET_NULL, null=True, blank=True)
-    download_file_name = models.CharField(verbose_name='Название скаченного альбома', max_length=20, null=True, blank=True)
+    download_file_name = models.CharField(verbose_name='Название скаченного альбома', max_length=300, null=True, blank=True)
     download_emp_Key = models.ForeignKey(EmployeeModel, verbose_name='id сотрудника скачавшего', on_delete=models.SET_NULL, max_length=20, null=True, blank=True)
-    download_emp_name = models.CharField(verbose_name='Имя сотрудника скачавшего', max_length=100, null=True, blank=True)
+    download_emp_name = models.CharField(verbose_name='Имя сотрудника скачавшего', max_length=300, null=True, blank=True)
     download_date = models.DateTimeField(verbose_name='Дата и время скачивания', auto_now_add=True, null=False)
 
     class Meta:
