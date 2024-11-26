@@ -1,0 +1,166 @@
+{% extends "get_inventory_app/base.html" %}
+{% load static %}
+
+{% block title %}
+    {{ file_name }}
+{% endblock %}
+
+{% block content %}
+    <div class="d-flex flex-column w-100">
+        <div class="d-flex flex-row w-100 justify-content-between  mt-5">
+            <div class="d-flex flex-column">
+                <div class="d-flex text-24px-bold"> {{ file_name }}</div>
+                {% if pdf_flag %}
+                <div class="d-flex text-18px-light">Предварительный просмотр</div>
+                {% else %}
+                <div class="d-flex text-18px-light">Предварительный просмотр не доступен</div>
+                {% endif %}
+
+            </div>
+            <div class="d-flex align-items-center flex-column justify-content-center align-items-center pdf_download_div"
+                 style="margin-right: 15px">
+                <div class="pdf_download_button" id="download"></div>
+                <div class="text-16px-bold">Скачать</div>
+            </div>
+        </div>
+        {% comment %}
+        <div class="d-flex w-100 search_result_position align-items-center"
+             onclick="window.open({% url 'download-album' album_id %})">Скачать {{ search_result.album_name }}</div>
+        <div class="d-flex w-100 search_result_position align-items-center" id="download">Скачать {{ file_name }}</div>
+        <a class="d-flex w-100 search_result_position align-items-center" href="{% url 'download-album' album_id %}"
+           download>download</a>
+{% endcomment %}
+        {% if pdf_flag %}
+            <iframe class="d-flex mt-5 w-100" id="pdf-js-viewer"
+                    src="{% static 'get_inventory_app/pdfjs-4.8.69/web/viewer.html' %}?file={{ test_url }}"
+                    title="webviewer" frameborder="0" width="100%" height="700"></iframe>
+        {% endif %}
+    </div>
+
+    <script>
+        $('#download').on('click', function () {
+            var link = document.createElement('a');
+            link.setAttribute('href', '{{ test_url }}');
+            link.setAttribute('download', '{{ file_name }}');
+            link.click();
+            return false;
+        });
+    </script>
+
+{% endblock %}
+
+
+{% comment %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"
+        integrity="sha512-q+4liFwdPC/bNdhUpZx6aXDx/h77yEQtn4I1slHydcbZK34nLaR3cAeYSJshoxIOq3mjEf7xJE8YWIUHMn+oCQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.js"
+        integrity="sha512-Y2115aLowncqghxp0ca1wqpkPu5GBtpZg1S/oRdSczGJc99r1GrY2CserqV5QrfQvE575qFlHKC6vnMD2i6fsQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf_viewer.js"
+        integrity="sha512-NOls4fGIrUMKaWkTB7ykWUWkPEwp+pdS5sIkdO1IKDQ58exGhhUV5eYIOY0y4qOP/3kcJ1/trJE8IhOe9SjlHw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endcomment %}
+{% comment %}
+<script src="{% static 'get_inventory_app/pdfjs-3.11.174-dist/build/pdf.js' %}"></script>
+<script src="{% static 'get_inventory_app/pdfjs-3.11.174-dist/build/pdf.worker.js' %}"></script>
+<script src="{% static 'get_inventory_app/pdfjs-3.11.174-dist/web/viewer.js' %}"></script>
+
+
+<script type="text/javascript">
+    document.addEventListener("webviewerloaded", () => {
+        window.PDFViewerApplicationOptions.set("{{ test_url }}", "{{ test_url }}")
+    })
+
+    document.addEventListener('DOMContentLoaded', function () {
+        let url = document.getElementById('link_file').innerHTML
+        LoadPdfFromUrl(url)
+
+    }, false);
+
+    var pdfjsLib = window['pdfjs-dist/build/pdf'];
+    pdfjsLib.GlobalWorkerOptions.workerSrc = '{% static 'get_inventory_app/pdfjs-3.11.174-dist/build/pdf.worker.js' %}';
+    var pdfDoc = null;
+    var scale = 1; //Set Scale for zooming PDF.
+    var resolution = 1; //Set Resolution to Adjust PDF clarity.
+
+    function LoadPdfFromUrl(url) {
+        //Read PDF from URL.
+        pdfjsLib.getDocument(url).promise.then(function (pdfDoc_) {
+            pdfDoc = pdfDoc_;
+
+            //Reference the Container DIV.
+            var pdf_container = document.getElementById("pdf_container");
+            pdf_container.style.display = "block";
+
+            //Loop and render all pages.
+            for (var i = 1; i <= pdfDoc.numPages; i++) {
+                RenderPage(pdf_container, i);
+            }
+        });
+    };
+
+    function RenderPage(pdf_container, num) {
+        pdfDoc.getPage(num).then(function (page) {
+            //Create Canvas element and append to the Container DIV.
+            var canvas = document.createElement('canvas');
+            canvas.id = 'pdf-' + num;
+            ctx = canvas.getContext('2d');
+            pdf_container.appendChild(canvas);
+
+            //Create and add empty DIV to add SPACE between pages.
+            var spacer = document.createElement("div");
+            spacer.style.height = "20px";
+            pdf_container.appendChild(spacer);
+
+            //Set the Canvas dimensions using ViewPort and Scale.
+            var viewport = page.getViewport({scale: scale});
+            canvas.height = resolution * viewport.height;
+            canvas.width = resolution * viewport.width;
+
+            //Render the PDF page.
+            var renderContext = {
+                canvasContext: ctx,
+                viewport: viewport,
+                transform: [resolution, 0, 0, resolution, 0, 0]
+            };
+
+            page.render(renderContext);
+        });
+    };
+</script>
+{% endcomment %}
+
+{% comment %}
+<script>
+
+    //Setting URL of the PDF document that you want to render
+    const url = '{{ test_url }}';
+
+    // Rendering the PDF on the canvas
+    pdfjsLib.getDocument(url).promise.then(pdf => {
+        // Loading the first page of the PDF
+        const pageNumber = 1;
+        return pdf.getPage(pageNumber);
+    }).then(page => {
+
+        // Setting the PDF zoom level to 100% by setting scale to 1
+        const viewport = page.getViewport({scale: 1});
+
+        // Prepare canvas using PDF page dimensions
+        const canvas = document.getElementById("pdfCanvas");
+        const context = canvas.getContext("2d");
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        // Render PDF page into canvas context
+        const renderContext = {
+            canvasContext: context,
+            viewport: viewport,
+        };
+
+        return page.render(renderContext);
+    });
+
+</script>
+{% endcomment %}

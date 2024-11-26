@@ -129,7 +129,7 @@ MEDIA_ROOT = MEDIA_DIR
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'search-in-archive'
 LOGOUT_REDIRECT_URL = 'login'
-
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 
 # Default primary key field type

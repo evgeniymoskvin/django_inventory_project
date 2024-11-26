@@ -21,7 +21,7 @@
     {% for search_result in search_results %}
         <div class="d-flex text-20px-light align-items-center w-100 flex-row">
             {% if not search_result.file_was_deleted %}
-            <div class="d-flex w-100 search_result_position align-items-center" onclick="location.href='{% url 'download-album' search_result.id %}'">{{ search_result.album_name}}</div>
+            <div class="d-flex w-100 search_result_position align-items-center" onclick="location.href='{% url 'album' search_result.id %}'">{{ search_result.album_name}}</div>
             {% else %}
             <div class="d-flex w-100 search_result_position_lost align-items-center" style="color: red">{{ search_result.album_name}} (Удален)</div>
             {% endif %}

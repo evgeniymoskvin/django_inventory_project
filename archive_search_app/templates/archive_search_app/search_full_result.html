@@ -6,9 +6,9 @@
 
 {% block content %}
 
-    <div class="d-flex flex-column w-100 min_vh_search mt-5 mb-5">
+    <div class="d-flex flex-column w-100 min_vh_search mt-5 mb-5 align-items-center">
 
-        <div class="d-flex flex-column w-100 mt-5" id="all_file_block">
+        <div class="d-flex flex-column w-100 mt-5" style="max-width: 1050px" id="all_file_block">
             <form method="POST" class="my_form d-flex flex-column align-items-start justify-content-center w-100"
                   id="search_form"
                   enctype="multipart/form-data">
@@ -27,17 +27,19 @@
                 </div>
             </form>
         </div>
-        <div class="d-flex flex-column w-100" id="search_result">
-            {% if len_search_result == 0 %}
+        <div class="d-flex flex-column w-100" style="max-width: 1050px" id="search_result">
+            {% if len_search_result == 0 and correct_album_len %}
                 <div class="text-18px-regular mt-3">По Вашему запросу ничего не найдено</div>
-                {% else %}
-                <div class="text-24px-light mt-3" style="padding-left: 24px">Результаты поиска:</div>
+            {% elif correct_album_len is False %}
+                <div class="text-18px-regular mt-3">Минимальная длина запроса должна быть не менее 4х символов</div>
+            {% else %}
+                <div class="text-18px-bold mt-3" style="padding-left: 18px">Результаты поиска:</div>
             {% endif %}
             {% for album in search_result %}
-                <div class="d-flex text-20px-light align-items-center w-100 flex-row">
+                <div class="d-flex text-18px-light align-items-center w-100 flex-row">
                     {% if not search_result.file_was_deleted %}
                         <div class="d-flex w-100 search_result_position_full align-items-center mt-2"
-                             onclick="location.href='{% url 'download-album' album.id %}'">{{ album.album_name }}</div>
+                             onclick="location.href='{% url 'album' album.id %}'">{{ album.album_name }}</div>
                     {% else %}
                         <div class="d-flex w-100 search_result_position_lost align-items-center mt-2"
                              style="color: red">{{ album.album_name }} (Удален)

@@ -7,17 +7,18 @@
 {% block content %}
 
     <div class="d-flex flex-column w-100 align-items-center justify-content-center min_vh_search" id="all_file_block">
-        <form method="POST" class="my_form d-flex flex-column align-items-start justify-content-center w-100"
+        <form method="POST" class="my_form d-flex flex-column align-items-center justify-content-center w-100"
               id="search_form"
-              enctype="multipart/form-data">
+              enctype="multipart/form-data"
+              onsubmit="if(document.getElementById('search').value == '') return false;">
             {% csrf_token %}
-            <div class="d-flex flex-column w-100" id="start_body">
-
-                <div class="d-flex flex-column w-100">
+            <div class="d-flex flex-column w-100 text-32px-bold" style="max-width: 1050px" id="start_body">
+                <div class="d-flex align-items-start justify-content-start"> Поиск по архиву</div>
+                <div class="d-flex flex-column w-100 justify-content-center align-items-center mt-3">
                     <div class="search_box d-flex text-32px-bold w-100">
-                        <input type="text" placeholder="Поиск альбома в архиве" name="search" id="search"
-                               data-ajax-url="{% url 'quick_search' %}" autocomplete="off"  minlength="4">
-                        <input type="submit">
+                        <input type="text" placeholder="Введите инвентарный номер" name="search" id="search"
+                               data-ajax-url="{% url 'quick_search' %}" autocomplete="off" minlength="4">
+                        <input type="submit" style="margin-right: 8px">
                     </div>
                     <div class="d-flex w-100" id="insert_search_result">
                     </div>

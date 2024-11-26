@@ -996,7 +996,7 @@ row__color {
 
 .search_box input[type="submit"] {
     display: inline-block;
-    width: 24px;
+    width: 22px;
     height: 40px;
     padding: 0;
     margin: 0;
@@ -1088,6 +1088,7 @@ row__color {
 .search_result_position:hover {
     background-color: rgba(108, 172, 228, 0.11);
 }
+
 .search_result_position_full:hover {
     background-color: rgba(108, 172, 228, 0.11);
 }
@@ -1111,7 +1112,28 @@ row__color {
     transition: all 0.3s ease-in-out;
 }
 
-.body_background{
+.body_background {
     background-color: rgba(148, 148, 148, 0.21);
     transition: all 0.3s ease-in-out;
+}
+
+.pdfobject-container {
+    height: 500px;
+    border: 1px solid #ccc;
+}
+
+.pdf_download_button {
+    background-image: url('../icons/pdf-file-type-svgrepo-com.svg');
+    width: 40px;
+    height: 40px;
+    background-size: cover;
+    transition: all .15s ease-in-out;
+}
+
+.pdf_download_div {
+    opacity: 0.6;
+}
+
+.pdf_download_div:hover{
+    opacity: 1;
 }
