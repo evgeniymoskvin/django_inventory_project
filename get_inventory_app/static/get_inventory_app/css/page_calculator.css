@@ -1132,6 +1132,7 @@ row__color {
 
 .pdf_download_div {
     opacity: 0.6;
+    cursor: pointer;
 }
 
 .pdf_download_div:hover{
