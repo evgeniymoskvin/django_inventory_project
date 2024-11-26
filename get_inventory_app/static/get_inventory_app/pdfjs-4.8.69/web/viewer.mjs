@@ -15172,8 +15172,8 @@ initCom(PDFViewerApplication);
 {
     var LOCAL_AUTO_DETECT_ORIGIN = window.location.origin;
 
-    const HOSTED_VIEWER_ORIGINS = ["null", "http://mozilla.github.io", "https://mozilla.github.io"];
-    HOSTED_VIEWER_ORIGINS.push(LOCAL_AUTO_DETECT_ORIGIN);
+    const HOSTED_VIEWER_ORIGINS = ["null", 'http://127.0.0.1:8001', 'http://archive.el-spb.local', 'https://archive.el-spb.local', 'http://161.11.20.105', 'http://161.11.20.105:8012', 'http://localhost:8001'];
+    //HOSTED_VIEWER_ORIGINS.push(LOCAL_AUTO_DETECT_ORIGIN);
     var validateFileURL = function (file) {
         if (!file) {
             return;
