@@ -8,6 +8,7 @@ import logging
 from django.utils.decorators import method_decorator
 # from django.core.files.temp import TemporaryFile, NamedTemporaryFile
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.clickjacking import xframe_options_exempt
 from django.http import HttpResponse
 from get_inventory_app.models import OrdersModel, ObjectModel, EmployeeModel, CpeModel, TypeOfInventoryNumberModel, \
     OpenInventoryNumbersModel, GeneralInfoInventoryNumberModel, CloseInventoryNumbersModel, \
@@ -63,6 +64,7 @@ class GetQuickSearchResultsView(View):
 
 
 class DownloadAlbumView(View):
+
     """Скачивание альбома"""
 
     @method_decorator(login_required(login_url='login'))
