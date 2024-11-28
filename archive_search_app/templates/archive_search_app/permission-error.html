@@ -1,0 +1,17 @@
+{% extends "get_inventory_app/base.html" %}
+{% load static %}
+{% block title %}
+    Ошибка доступа
+{% endblock %}
+
+{% block content %}
+    <div class="d-flex w-100 min-vh-100 flex-column align-items-center justify-content-center" id="display_div">
+        <div class="d-flex w-100 align-items-center justify-content-center text-36px-bold mt-5">
+            Ошибка доступа
+        </div>
+        <div class="d-flex w-100 align-items-center justify-content-center text-16px-light link_clearance_info dashed_text mt-2"
+             id="clearance_info" onclick="window.location.replace('{% url 'search-in-archive' %}')">
+            На главную
+        </div>
+    </div>
+{% endblock %}

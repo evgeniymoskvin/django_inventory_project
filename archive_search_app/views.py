@@ -13,7 +13,7 @@ from django.http import HttpResponse
 from get_inventory_app.models import OrdersModel, ObjectModel, EmployeeModel, CpeModel, TypeOfInventoryNumberModel, \
     OpenInventoryNumbersModel, GeneralInfoInventoryNumberModel, CloseInventoryNumbersModel, \
     GeneralInfoPermissionNumberModel, ReplacementPermissionNumbersModel, TypeOfPermissionNumberModel, \
-    PermissionNumbersModel, ArchiveFilesModel, LogsDownloadsAlbum
+    PermissionNumbersModel, ArchiveFilesModel, LogsDownloadsAlbum, MoreDetailsEmployeeModel
 
 load_dotenv()
 API_ADDRESS_ARCHIVE = os.getenv('API_ADDRESS_ARCHIVE')
@@ -70,28 +70,35 @@ class DownloadAlbumView(View):
     @method_decorator(login_required(login_url='login'))
     def get(self, request, pk):
         emp = EmployeeModel.objects.get(user=request.user)
-        obj = ArchiveFilesModel.objects.get(id=pk)
-        new_log = LogsDownloadsAlbum(download_file_key=obj,
-                                     download_file_name=obj.album_name,
-                                     download_emp_Key=emp,
-                                     download_emp_name=f'{emp.last_name} {emp.first_name} {emp.middle_name}')
-        new_log.save()
-        file_name = obj.album_name
-        file_name_split = file_name.split('.')
-        if file_name_split[-1] == 'pdf':
-            pdf_flag = True
+        more_details = MoreDetailsEmployeeModel.objects.get(emp=emp)
+        if more_details.archive_access:
+            obj = ArchiveFilesModel.objects.get(id=pk)
+            new_log = LogsDownloadsAlbum(download_file_key=obj,
+                                         download_file_name=obj.album_name,
+                                         download_emp_Key=emp,
+                                         download_emp_name=f'{emp.last_name} {emp.first_name} {emp.middle_name}')
+            new_log.save()
+            file_name = obj.album_name
+            file_name_split = file_name.split('.')
+            if file_name_split[-1] == 'pdf':
+                pdf_flag = True
+            else:
+                pdf_flag = False
+            test_url = f'{API_ADDRESS_ARCHIVE}/download_album_api/{pk}'
+            print(test_url)
+            content = {
+                'pdf_flag': pdf_flag,
+                'file_name': obj.album_name,
+                'test_url': test_url,
+                'album_id': pk,
+            }
+            # return redirect(f'{API_ADDRESS_ARCHIVE}/download_album_api/{pk}')
+            return render(request, 'archive_search_app/pdf_viewer.html', content)
         else:
-            pdf_flag = False
-        test_url = f'{API_ADDRESS_ARCHIVE}/download_album_api/{pk}'
-        print(test_url)
-        content = {
-            'pdf_flag': pdf_flag,
-            'file_name': obj.album_name,
-            'test_url': test_url,
-            'album_id': pk,
-        }
-        # return redirect(f'{API_ADDRESS_ARCHIVE}/download_album_api/{pk}')
-        return render(request, 'archive_search_app/pdf_viewer.html', content)
+            content ={
+
+            }
+            return render(request, 'archive_search_app/permission-error.html', content)
 
 
 class DownloadAlbumLinkView(View):
