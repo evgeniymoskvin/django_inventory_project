@@ -1,7 +1,8 @@
 from django.contrib import admin
 from .models import GeneralInfoInventoryNumberModel, CloseInventoryNumbersModel, OpenInventoryNumbersModel, \
     KTInventoryNumbersModel, TypeOfInventoryNumberModel, TypeOfPermissionNumberModel, ReplacementPermissionNumbersModel, \
-    GeneralInfoPermissionNumberModel, PermissionNumbersModel, ContractModel, ObjectModel, CpeModel, LogsDownloadsAlbum, ArchiveFilesModel
+    GeneralInfoPermissionNumberModel, PermissionNumbersModel, ContractModel, ObjectModel, CpeModel, LogsDownloadsAlbum, \
+    ArchiveFilesModel, ArchiveEditableFilesModel
 
 
 class GeneralInfoInventoryNumberAdmin(admin.ModelAdmin):
@@ -32,25 +33,38 @@ class TypeOfInventoryNumberAdmin(admin.ModelAdmin):
 
 class TypeOfPermissionNumberAdmin(admin.ModelAdmin):
     ordering = ['number_of_code_in_ms_access']
+
+
 class ContractAdmin(admin.ModelAdmin):
     list_filter = ('contract_object', 'contract_code', 'contract_name', 'show')
     ordering = ['contract_object__object_code', 'contract_name', 'contract_code']
 
+
 class ObjectAdmin(admin.ModelAdmin):
     list_filter = ('object_code', 'object_name')
     ordering = ['object_code', 'object_name']
+
+
 class CpeAdmin(admin.ModelAdmin):
     search_fields = ['cpe_object', 'cpe_user']
     list_filter = ('cpe_user', 'cpe_object')
     ordering = ['cpe_object', 'cpe_user']
+
+
 class ArchiveFilesAdmin(admin.ModelAdmin):
     search_fields = ['album_name', 'md5_file']
-    list_filter = ('file_was_deleted', )
+    list_filter = ('file_was_deleted',)
     ordering = ['album_name']
+
+class ArchiveEditableFilesAdmin(admin.ModelAdmin):
+    search_fields = ['album_name', 'md5_file']
+    list_filter = ('file_was_deleted',)
+    ordering = ['album_name']
+
+
 class LogsDownloadsAdmin(admin.ModelAdmin):
     search_fields = ['download_file_key', 'download_file_name', 'download_emp_name']
     ordering = ['-id']
-
 
 
 admin.site.register(GeneralInfoInventoryNumberModel, GeneralInfoInventoryNumberAdmin)
@@ -63,5 +77,5 @@ admin.site.register(ContractModel, ContractAdmin)
 admin.site.register(ObjectModel, ObjectAdmin)
 admin.site.register(CpeModel, CpeAdmin)
 admin.site.register(ArchiveFilesModel, ArchiveFilesAdmin)
+admin.site.register(ArchiveEditableFilesModel, ArchiveEditableFilesAdmin)
 admin.site.register(LogsDownloadsAlbum, LogsDownloadsAdmin)
-

@@ -201,6 +201,22 @@ class CpeModel(models.Model):
     def __str__(self):
         return f'{self.cpe_user}, {self.cpe_object}'
 
+class PrintPagePermissionModel(models.Model):
+    """
+    Доступ сотрудников к странице печати
+    """
+    emp = models.ForeignKey(EmployeeModel, verbose_name="Сотрудник", on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = _('сотрудник имеющий доступ к странице печати')
+        verbose_name_plural = _('сотрудники имеющие доступ к странице печати')
+        managed = False
+        db_table = 'page_calculator_app_printpagepermissionmodel'
+
+    def __str__(self):
+        return f'{self.emp.last_name} {self.emp.first_name} {self.emp.middle_name}'
+
+
 
 # Инвентарные номера
 class GeneralInfoInventoryNumberModel(models.Model):
@@ -361,9 +377,11 @@ class ReplacementPermissionNumbersModel(models.Model):
             actual_str = 'Аннулирован'
         return f'{self.permission_number} ({actual_str})'
 
+
 class ArchiveFilesModel(models.Model):
     """Таблица альбомов """
-    album_name = models.CharField(unique=True, verbose_name='Наименование альбома', max_length=128, null=True, blank=True)
+    album_name = models.CharField(unique=True, verbose_name='Наименование альбома', max_length=128, null=True,
+                                  blank=True)
     file_path = models.CharField(verbose_name='Путь к файлу', max_length=2500, null=True, blank=True)
     file_size = models.FloatField(verbose_name='Размер файла', max_length=50, null=True, blank=True)
     md5_file = models.CharField(unique=True, verbose_name='md5 файла', max_length=250, null=True, blank=True)
@@ -378,12 +396,38 @@ class ArchiveFilesModel(models.Model):
     def __str__(self):
         return f'{self.album_name} (md5:{self.md5_file}) {self.file_path}'
 
+
+class ArchiveEditableFilesModel(models.Model):
+    """Таблица альбомов """
+    album_name = models.CharField(unique=True, verbose_name='Наименование архива', max_length=128, null=True,
+                                  blank=True)
+    file_path = models.CharField(verbose_name='Путь к файлу', max_length=2500, null=True, blank=True)
+    file_size = models.FloatField(verbose_name='Размер файла', max_length=50, null=True, blank=True)
+    md5_file = models.CharField(unique=True, verbose_name='md5 файла', max_length=250, null=True, blank=True)
+    data_create = models.DateTimeField(verbose_name='Дата создания', null=True, blank=True)
+    date_update = models.DateTimeField(verbose_name='Дата последнего обновления', null=True, blank=True)
+    file_was_deleted = models.BooleanField(verbose_name='Файл был удален', default=False)
+
+    class Meta:
+        verbose_name = _('файл в редактируемом формате')
+        verbose_name_plural = _('файлы в редактируемом формате')
+
+    def __str__(self):
+        return f'{self.album_name} (md5:{self.md5_file}) {self.file_path}'
+
+
+
+
 class LogsDownloadsAlbum(models.Model):
     """logs скачивания файлов"""
-    download_file_key = models.ForeignKey(ArchiveFilesModel, verbose_name='id скаченного альбома', on_delete=models.SET_NULL, null=True, blank=True)
-    download_file_name = models.CharField(verbose_name='Название скаченного альбома', max_length=300, null=True, blank=True)
-    download_emp_Key = models.ForeignKey(EmployeeModel, verbose_name='id сотрудника скачавшего', on_delete=models.SET_NULL, max_length=20, null=True, blank=True)
-    download_emp_name = models.CharField(verbose_name='Имя сотрудника скачавшего', max_length=300, null=True, blank=True)
+    download_file_key = models.ForeignKey(ArchiveFilesModel, verbose_name='id скаченного альбома',
+                                          on_delete=models.SET_NULL, null=True, blank=True)
+    download_file_name = models.CharField(verbose_name='Название скаченного альбома', max_length=300, null=True,
+                                          blank=True)
+    download_emp_Key = models.ForeignKey(EmployeeModel, verbose_name='id сотрудника скачавшего',
+                                         on_delete=models.SET_NULL, max_length=20, null=True, blank=True)
+    download_emp_name = models.CharField(verbose_name='Имя сотрудника скачавшего', max_length=300, null=True,
+                                         blank=True)
     download_date = models.DateTimeField(verbose_name='Дата и время скачивания', auto_now_add=True, null=False)
 
     class Meta:

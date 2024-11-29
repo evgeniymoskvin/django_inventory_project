@@ -20,6 +20,6 @@ from . import views
 urlpatterns = [
     path('', views.SearchInArchiveView.as_view(), name='search-in-archive'),
     path('search/ajax/quick_search', views.GetQuickSearchResultsView.as_view(), name='quick_search'),
-    path('album/<int:pk>', views.DownloadAlbumView.as_view(), name='album'),
+    path('album/<int:pk1>/<int:pk2>', views.DownloadAlbumView.as_view(), name='album'),
     path('download_album/<int:pk>', views.DownloadAlbumLinkView.as_view(), name='download-album'),
 ]
