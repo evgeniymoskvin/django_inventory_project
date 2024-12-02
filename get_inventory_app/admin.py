@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import GeneralInfoInventoryNumberModel, CloseInventoryNumbersModel, OpenInventoryNumbersModel, \
     KTInventoryNumbersModel, TypeOfInventoryNumberModel, TypeOfPermissionNumberModel, ReplacementPermissionNumbersModel, \
     GeneralInfoPermissionNumberModel, PermissionNumbersModel, ContractModel, ObjectModel, CpeModel, LogsDownloadsAlbum, \
-    ArchiveFilesModel, ArchiveEditableFilesModel
+    ArchiveFilesModel, ArchiveEditableFilesModel, CountsFilesInArchive
 
 
 class GeneralInfoInventoryNumberAdmin(admin.ModelAdmin):
@@ -79,3 +79,4 @@ admin.site.register(CpeModel, CpeAdmin)
 admin.site.register(ArchiveFilesModel, ArchiveFilesAdmin)
 admin.site.register(ArchiveEditableFilesModel, ArchiveEditableFilesAdmin)
 admin.site.register(LogsDownloadsAlbum, LogsDownloadsAdmin)
+admin.site.register(CountsFilesInArchive)
