@@ -83,8 +83,10 @@ class GetQuickSearchResultsView(View):
         print(search_result_pdf)
         sum_result_len = len(search_result_pdf) + len(search_result_editable)
         if sum_result_len > 10:
-            search_result_editable = search_result_editable[:(sum_result_len // 2 + 1)]
-            search_result_pdf = search_result_pdf[:(sum_result_len // 2 + 1)]
+            if len(search_result_pdf) > 10:
+                search_result_pdf = search_result_pdf[:5]
+            if len(search_result_editable) > 10:
+                search_result_editable = search_result_editable[:5]
         else:
             search_result_editable = search_result_editable[:10]
             search_result_pdf = search_result_pdf[:10]

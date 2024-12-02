@@ -201,6 +201,7 @@ class CpeModel(models.Model):
     def __str__(self):
         return f'{self.cpe_user}, {self.cpe_object}'
 
+
 class PrintPagePermissionModel(models.Model):
     """
     Доступ сотрудников к странице печати
@@ -215,7 +216,6 @@ class PrintPagePermissionModel(models.Model):
 
     def __str__(self):
         return f'{self.emp.last_name} {self.emp.first_name} {self.emp.middle_name}'
-
 
 
 # Инвентарные номера
@@ -416,8 +416,6 @@ class ArchiveEditableFilesModel(models.Model):
         return f'{self.album_name} (md5:{self.md5_file}) {self.file_path}'
 
 
-
-
 class LogsDownloadsAlbum(models.Model):
     """logs скачивания файлов"""
     download_file_key = models.ForeignKey(ArchiveFilesModel, verbose_name='id скаченного альбома',
@@ -436,3 +434,19 @@ class LogsDownloadsAlbum(models.Model):
 
     def __str__(self):
         return f'{self.download_file_name} - {self.download_emp_name} - {self.download_date}'
+
+
+# class CountsFilesInArchive(models.Model):
+#     """Счетчик количества файлов в архиве"""
+#
+#     count_pdf = models.IntegerField(verbose_name='Количество pdf файлов', null=True, blank=True)
+#     count_editable = models.IntegerField(verbose_name='Количество zip файлов', null=True, blank=True)
+#     date_of_update_counts = models.IntegerField(verbose_name='Количество добавленных файлов', null=True, blank=True)
+#     date_log = models.DateTimeField(verbose_name='Дата и время обновления', auto_now_add=True, null=False)
+#
+#     class Meta:
+#         verbose_name = _('log количества файлов')
+#         verbose_name_plural = _('logs количества файлов')
+#
+#     def __str__(self):
+#         return f'{self.date_of_update_counts} - {self.count_pdf} - {self.count_editable}'
