@@ -38,11 +38,13 @@
             {% for album in search_result_pdf %}
                 <div class="d-flex text-18px-light align-items-center  w-100 flex-row">
                     {% if not search_result.file_was_deleted %}
-                        <div class="d-flex w-100 flex-column search_result_position_full align-items-start justify-content-center mt-2"
-                             onclick="location.href='{% url 'album' album.id 1 %}'">{{ album.album_name }}
-                            {% if user_permission %}
-                                <div class="d-flex text-16px-light"> {{ album.file_path }}</div>
-                            {% endif %}
+                        <div class="d-flex w-100 flex-column">
+                            <div class="d-flex w-100 flex-column search_result_position_full align-items-start justify-content-center mt-2"
+                                 onclick="location.href='{% url 'album' album.id 1 %}'">{{ album.album_name }}
+                                {% if user_permission %}
+                                    <div class="d-flex text-16px-light"> {{ album.file_path }}</div>
+                                {% endif %}
+                            </div>
                         </div>
                     {% else %}
                         <div class="d-flex w-100 search_result_position_lost align-items-center justify-content-center mt-2"
@@ -52,13 +54,15 @@
                 </div>
             {% endfor %}
             {% for album in search_result_editable %}
-                <div class="d-flex text-18px-light align-items-center w-100 flex-row">
+                <div class="d-flex text-18px-light align-items-center  w-100 flex-row">
                     {% if not search_result.file_was_deleted %}
-                        <div class="d-flex w-100 flex-column search_result_position_full align-items-start mt-2"
-                             onclick="location.href='{% url 'album' album.id 2 %}'">{{ album.album_name }}
-                            {% if user_permission %}
-                                <div class="d-flex text-16px-light"> {{ album.file_path }}</div>
-                            {% endif %}
+                        <div class="d-flex w-100 flex-column">
+                            <div class="d-flex w-100 flex-column search_result_position_full align-items-start justify-content-center mt-2"
+                                 onclick="location.href='{% url 'album' album.id 2 %}'">{{ album.album_name }}
+                                {% if user_permission %}
+                                    <div class="d-flex text-16px-light"> {{ album.file_path }}</div>
+                                {% endif %}
+                            </div>
                         </div>
                     {% else %}
                         <div class="d-flex w-100 search_result_position_lost align-items-center mt-2"
@@ -66,6 +70,7 @@
                         </div>
                     {% endif %}
                 </div>
+
             {% endfor %}
         </div>
     </div>
