@@ -43,11 +43,8 @@ class SearchInArchiveView(View):
         if len(album) >= 4:
             search_result_pdf = ArchiveFilesModel.objects.all().filter(album_name__icontains=album).order_by(
                 'album_name')
-            if user_permission:
-                search_result_editable = ArchiveEditableFilesModel.objects.all().filter(
-                    album_name__icontains=album).order_by('album_name')
-            else:
-                search_result_editable = []
+            search_result_editable = ArchiveEditableFilesModel.objects.all().filter(
+                album_name__icontains=album).order_by('album_name')
             len_search_result = len(search_result_pdf) + len(search_result_editable)
             correct_album_len = True
 
@@ -74,12 +71,9 @@ class GetQuickSearchResultsView(View):
             user_permission = False
         search = request.POST['search']
         search_result_pdf = ArchiveFilesModel.objects.all().filter(album_name__icontains=search).order_by('album_name')
-        if user_permission:
-            search_result_editable = ArchiveEditableFilesModel.objects.all().filter(
-                album_name__icontains=search).order_by(
-                'album_name')
-        else:
-            search_result_editable = []
+        search_result_editable = ArchiveEditableFilesModel.objects.all().filter(
+            album_name__icontains=search).order_by(
+            'album_name')
         print(search_result_pdf)
         sum_result_len = len(search_result_pdf) + len(search_result_editable)
         if sum_result_len > 10:
